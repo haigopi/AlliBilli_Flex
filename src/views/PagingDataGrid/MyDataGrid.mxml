@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:DataGrid xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Metadata>
+		[Event(name="rowCountChangeEvent", type="flash.events.Event")]
+	</mx:Metadata>	
+	<mx:Script>
+		<![CDATA[
+			//custom event that tells that the data grid just finished the rendering
+			public static const UPDATEROWCOUNT:String = "rowCountChangeEvent";
+			
+			private var _rows:int;
+			/**
+			 * dispatch an Event("rowCountChangeEvent") when the rowCount is changed;
+			 * usually this is happening when the datagrid renderer the data for the first time
+			 * and the number of visible rows were calculated.
+			 */ 
+			override protected function setRowCount(v:int):void {
+    			super.setRowCount(v);
+    			if (_rows != v)
+					dispatchEvent(new Event("rowCountChangeEvent"));
+				_rows = v;
+    		}
+		]]>
+	</mx:Script>
+</mx:DataGrid>

@@ -1,0 +1,186 @@
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="95%" height="98%" verticalScrollBarStyleName="fseVerticalScrollBar" horizontalAlign="center"
+					label="Sugesst US" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" creationComplete="creationCompleteHandler()">
+
+<mx:Script>
+	<![CDATA[
+		import mx.events.ValidationResultEvent;
+		import mx.validators.Validator;
+		import mx.controls.Text;
+		import mx.rpc.events.ResultEvent;
+		import mx.collections.ArrayCollection;
+		import mx.controls.Alert;
+		import com.MyCustomEvent;
+
+		[Bindable]
+        public var formIsValid:Boolean = false;
+
+        [Bindable]
+        public var formIsEmpty:Boolean = true;
+
+        // Holds a reference to the currently focussed 
+        // control on the form.
+        private var focussedFormControl:DisplayObject;
+        
+		public function reloadDataGridHandler(type:String):void
+		{
+			
+			var eve:MyCustomEvent;
+			 if(type == "submit")
+			 {	
+			 		var fName:String = fname.text;
+			 		var dataContent:String = content.text;
+			 		var dataCollection:ArrayCollection = new ArrayCollection();
+			 		dataCollection.addItem(fName);
+			 		dataCollection.addItem(dataContent);
+			 		eve = new MyCustomEvent(MyCustomEvent.MyFormSubmitEvent);
+			 		eve.setDataCollection(dataCollection);
+			 		dispatchEvent(eve);
+			 }
+			 
+			 else{
+			 	trace("Reloading");
+				eve = new MyCustomEvent(MyCustomEvent.ReloadEvent);
+				dispatchEvent(eve);
+				}
+				
+			}
+			private function validateForm(event:Event):void 
+            {                    
+                // Save a reference to the currently focussed form control
+                // so that the isValid() helper method can notify only
+                // the currently focussed form control and not affect
+                // any of the other form controls.
+                focussedFormControl = event.target as DisplayObject;    
+
+                // Mark the form as valid to start with                
+                formIsValid = true;            
+
+                // Check if form is empty
+                formIsEmpty = (fname.text == "" && content.text == ""); 
+
+                // Run each validator in turn, using the isValid() 
+                // helper method and update the value of formIsValid
+                // accordingly.
+                validate(nameValidator);                
+                validate(contentValidator);
+            }
+			 private function validate(validator:Validator):Boolean
+             {                
+                // Get a reference to the component that is the
+                // source of the validator.
+                 var validatorSource:DisplayObject = validator.source as DisplayObject;
+                
+                // Suppress events if the current control being validated is not
+                // the currently focussed control on the form. This stops the user
+                // from receiving visual validation cues on other form controls.
+                var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+                
+                // Carry out validation. Returns a ValidationResultEvent.
+                // Passing null for the first parameter makes the validator 
+                // use the property defined in the property tag of the
+                // <mx:Validator> tag.
+                var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+                                
+                // Check if validation passed and return a boolean value accordingly.
+                 var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+                 
+                 // Update the formIsValid flag
+                 formIsValid = formIsValid && currentControlIsValid;
+                 
+                 return currentControlIsValid;
+              }
+
+            
+            // Helper method. Sets the focus on the first field so 
+            // user does not have to mouse over to it.
+            private function resetFocus():void
+            {
+                focusManager.setFocus(fname);
+            }
+             private function creationCompleteHandler():void
+              {
+                // Set the focus on the first field so 
+                // user does not have to mouse over to it.
+                // Note that the user still has to click on the 
+                // Flex application to give it focus. This is 
+                // a currently limitation in Flex.
+                  resetFocus(); 
+              }
+            
+           
+		
+	]]>
+</mx:Script>
+	<mx:StringValidator 
+        id="nameValidator"
+        source="{fname}" 
+        property="text"
+        minLength="1"
+    />
+    <mx:StringValidator 
+        id="contentValidator"
+        source="{content}" 
+        property="text"
+        minLength="5"
+    />
+				<mx:Label width="100%" text="Alli Billi" styleName="styleExplorerTitleAlliBilli" textAlign="center">
+            		<mx:filters>
+                  	<flash.filters:DropShadowFilter xmlns:flash.filters="flash.filters.*" angle="90" blurX="5" blurY="5"
+                       distance="2" alpha=".3" color="0x000000" />
+              		</mx:filters>
+        		</mx:Label>
+        		
+		<mx:Panel id="feedBackDataGridFormBox" title="Why don't you Support us, Sending your opinin." layout="vertical" horizontalAlign="center"
+        color="0xffffff" borderAlpha="0.15" width="90%" paddingTop="10" paddingRight="5" paddingBottom="10" paddingLeft="5"
+        verticalScrollPolicy="off"  verticalGap="10">
+
+        <mx:Form width="95%" color="0x323232" paddingTop="5" id="myFormData">
+
+		   	<mx:FormItem width="30%" label="Name">
+                <mx:TextInput id="fname" width="100%" change="validateForm(event);"/>
+            </mx:FormItem>
+            <mx:FormItem width="100%" label="Opinion">
+                <mx:TextArea id="content" width="100%" change="validateForm(event);"/>
+            </mx:FormItem>
+            <mx:HBox horizontalAlign="right" verticalAlign="bottom"  width="100%">
+            <mx:FormItem  horizontalAlign="right">
+                <mx:Button id="Submit" label="Submit" click="reloadDataGridHandler('submit')"  enabled="{formIsValid}"/>
+            </mx:FormItem>
+           	<mx:FormItem  horizontalAlign="right">
+                <mx:Button id="Reload" label="Reload Content" click="reloadDataGridHandler('reload')"/>
+            </mx:FormItem>
+            </mx:HBox>
+        </mx:Form>
+        
+    </mx:Panel>
+				    	
+				    	
+	<mx:DataGrid width="95%" color="#000000" id="feedBackDataGridId" paddingRight="5" paddingLeft="5" sortableColumns="false" draggableColumns="false" height="95%">
+         	<mx:columns>
+                <mx:DataGridColumn dataField="name" headerText="Name" width="50"/>
+                <mx:DataGridColumn dataField="dataTime" headerText="Posted Date" width="50"/>
+                <mx:DataGridColumn headerText="Message">
+                	<mx:itemRenderer>
+                		<mx:Component>
+                			<mx:HBox paddingLeft="2">
+	                			<mx:Script>
+									<![CDATA[
+										import mx.controls.Alert;
+										override public function set data( value:Object ) : void {
+											super.data = value;
+										}
+									]]>
+								</mx:Script>
+								<mx:TextArea width="98%" text="{data.opinion}" height="60" editable="false" />
+							</mx:HBox>
+						</mx:Component>
+                	</mx:itemRenderer>
+                </mx:DataGridColumn>
+            </mx:columns>
+        </mx:DataGrid>
+        <mx:HBox horizontalAlign="right" width="95%">
+        <mx:Button id="prev" label="Previous" />
+        <mx:Button id="next" label="Next" />
+        </mx:HBox> 
+		</mx:VBox>
+	

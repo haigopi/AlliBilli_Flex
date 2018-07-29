@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+		paddingBottom="5"
+		paddingLeft="5"
+		paddingTop="5"
+		paddingRight="5" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+		>
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+		]]>
+	</mx:Script>
+		
+	
+	<mx:Image width="75" height="75" source="{data.@url}" click="Alert.show('')"/>
+	
+</mx:VBox>

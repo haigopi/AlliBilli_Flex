@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"
+		 xmlns:controls="com.youtube.*"
+		 horizontalAlign="center"
+		 backgroundAlpha="0.2"
+		 backgroundColor="#CCFFCC">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.HSlider;
+			private var isMute:Boolean=true;
+
+			[Bindable]
+			private var videoId:String="M2NKBhKZtQQ";
+
+			private function toggelMute(event:Event):void
+			{
+				if (isMute)
+				{
+					this.player_container.mute();
+					isMute=false;
+				}
+				else
+				{
+					isMute=true;
+					this.player_container.unMute();
+				}
+			}
+			private var results:Array;
+
+			[Bindable]
+			public function setVideoId(youTubeURL:String):void
+			{
+				results=youTubeURL.split(",");
+				if (this.player_container != null)
+					videoId=results[results.length - 1];
+			}
+
+			public function setRandomVideoId():void
+			{
+
+				var rand:Number=Math.random();
+				var max:Number=results.length - 1;
+				var randInRange:Number=Math.round(rand * max);
+				if (this.player_container != null)
+					videoId=results[randInRange];
+				this.player_container.play();
+			}
+		]]>
+	</mx:Script>
+
+	<controls:YouTubePlayer id="player_container"
+							videoID="{videoId}"
+							width="200"
+							height="150"/>
+
+	<mx:HBox>
+		<mx:Button styleName="play"
+				   click="this.player_container.play()"
+				   toolTip="Play Video"/>
+		<mx:Button styleName="pause"
+				   click="this.player_container.pause()"
+				   toolTip="Pause Video"/>
+		<mx:Button styleName="stop"
+				   click="this.player_container.stop()"
+				   toolTip="Stop Video"/>
+		<mx:Button styleName="next"
+				   click="setRandomVideoId()"
+				   toolTip="Random Play"/>
+		<mx:Button styleName="fullscreenButton"
+				   click="this.player_container.fullscreen()"
+				   toolTip="FullScreen"/>
+		<mx:Button styleName="mute"
+				   click="this.toggelMute(event)"
+				   toolTip="Mute/Unmute"/>
+	</mx:HBox>
+
+	<mx:HBox>
+		<mx:HSlider liveDragging="true"
+					minimum="0"
+					value=".5"
+					maximum="1"
+					toolTip="Volume Control"
+					change="this.player_container.volume = event.currentTarget['value']"/>
+	</mx:HBox>
+</mx:VBox>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml"
+		 xmlns:net="flash.net.*"
+		 xmlns:media="flash.media.*"
+		 creationComplete="mySound.load(myURLReq);"
+		 height="20" width="100">
+
+	<mx:Number id="myPos">0</mx:Number>
+	<net:URLRequest id="myURLReq"
+					url="http://allibilli.com/flex4/1.mp3"/>
+	<media:SoundChannel id="mySoundChannel"/>
+	<media:Sound id="mySound"/>
+	<mx:Button id="play" width="12" height="12"
+			   styleName="play" toolTip="Click to play - Great Compositions, Song of the Day !"
+			   click="mySoundChannel = mySound.play(myPos, 0, null)"/>
+	<mx:Button id="pause" width="12" height="12"
+			   styleName="pause" toolTip="Pause Playing"
+			   click="myPos = mySoundChannel.position; mySoundChannel.stop()"/>
+	<mx:Button id="stop" width="12" height="12"
+			   styleName="stop" toolTip="Stop Playing"
+			   click="myPos=0; mySoundChannel.stop()"/>
+</mx:HBox>

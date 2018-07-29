@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+	
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" verticalScrollBarStyleName="fseVerticalScrollBar" horizontalAlign="center"
+					label="Search GBY" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" >
+<mx:Script>
+	<![CDATA[
+		import mx.collections.ArrayCollection;
+		import mx.controls.Alert;
+		import com.MyCustomEvent;
+		public function reloadDataGridHandler(type:String):void
+		{
+		var eve:MyCustomEvent;
+		 if(type == "submit")
+		 {	
+		 		var fName:String = fname.text;
+		 		var dataCollection:ArrayCollection = new ArrayCollection();
+		 		dataCollection.addItem(fName);
+		 		eve = new MyCustomEvent(MyCustomEvent.MyFormSearchEvent);
+		 		eve.setDataCollection(dataCollection);
+		 		dispatchEvent(eve);
+		 }
+		 else{
+			eve = new MyCustomEvent(MyCustomEvent.ReloadEvent);
+			dispatchEvent(eve);
+			}
+			
+		}
+	]]>
+</mx:Script>
+	
+				<mx:Label width="100%" text="Alli Billi" styleName="styleExplorerTitleAlliBilli" textAlign="center">
+            		<mx:filters>
+                  	<flash.filters:DropShadowFilter xmlns:flash.filters="flash.filters.*" angle="90" blurX="5" blurY="5"
+                       distance="2" alpha=".3" color="0x000000" />
+              		</mx:filters>
+        		</mx:Label>
+        		
+		<mx:Panel id="feedBackDataGridFormBox" title="This will do several kinds Searched in Google, Yahoo, Bing." layout="vertical" horizontalAlign="center"
+        color="0xffffff" borderAlpha="0.15" width="90%" paddingTop="10" paddingRight="5" paddingBottom="10" paddingLeft="5"
+        verticalScrollPolicy="off"  verticalGap="10">
+
+        <mx:Form width="90%" color="0x323232" paddingTop="5" id="myFormData">
+		   	<mx:FormItem width="30%" label="Name">
+                <mx:TextInput id="fname" width="100%"/>
+            </mx:FormItem>
+            <mx:HBox horizontalAlign="right" verticalAlign="bottom" width="100%">
+            <mx:FormItem  horizontalAlign="right">
+                <mx:Button id="Submit" label="Submit" click="reloadDataGridHandler('submit')"/>
+            </mx:FormItem>
+            </mx:HBox>
+        </mx:Form>
+        
+    </mx:Panel>
+				    	
+				  
+		</mx:VBox>
+	

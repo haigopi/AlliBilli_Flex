@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:head="head.*" width="100%" height="100%"
+	label="Download Font">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.utils.ObjectUtil;
+			import mx.controls.Alert;
+			
+		[Bindable] [Embed(source='assets/download.png')] private var DownloadImg:Class;
+     	[Bindable] [Embed(source='assets/Video.png')] private var video:Class;
+     	private static var ANDHRAJYOTHI:String = "andhraJyothi";
+     	private static var EENADU:String = "eenadu";
+     	private static var SAKSHI:String = "sakshi";
+     	private static var VAARTHA:String = "vaartha";
+     	
+     	[Bindable] private var FILE_URL:String = "http://epaper.eenadu.net/eenadu.xyz";
+     	
+     	public function downloadFont(from:String):void
+     	{
+     		if(ObjectUtil.stringCompare(from, EENADU)==0)
+     		{
+     			FILE_URL = "http://allibilli.com/fonts/eenadu.ttf";
+     		}
+     		else if(ObjectUtil.stringCompare(from,SAKSHI)==0)
+     		{
+     			FILE_URL = "http://www.sakshi.com/fonts/SW908.TTF";
+     		}
+     		else if(ObjectUtil.stringCompare(from,ANDHRAJYOTHI)==0)
+     		{
+     			FILE_URL = "http://www.andhrajyothy.com/fonts/SHREE900.TTF";
+     		}
+     		else if(ObjectUtil.stringCompare(from,VAARTHA)==0)
+     		{
+     			FILE_URL = "http://www.vaarttha.com/font/vaartha.ttf";
+     		}
+        	var fileRef:FileReference;
+        	var urlReq:URLRequest;
+        
+			urlReq = new URLRequest(FILE_URL);
+            fileRef = new FileReference();
+            fileRef.download(urlReq);
+     	}
+     	
+		]]>
+	</mx:Script>
+	<mx:Zoom id="shrink" duration="100" zoomHeightTo=".9" zoomWidthTo=".9" />
+	<mx:Zoom id="revert" duration="50" zoomHeightTo="1" zoomWidthTo="1" />
+        
+	<mx:VBox width="95%" height="100%" styleName="styleControlTabNavigator" paddingLeft="1" paddingRight="1" paddingTop="10" paddingBottom="1" horizontalAlign="center">
+	<head:GlassHeaders headerTitle="FONT HELP CENTER"/>
+	
+	<mx:HBox width="95%" styleName="styleControlTabNavigator" label="Eenadu" horizontalAlign="center">
+		<mx:VBox width="100%">
+			<mx:Text text="1. Click on the Download font button appears on right and Save the file to disk." textAlign="left" paddingTop="1" paddingLeft="1"/>
+			<mx:Text text="2. Rename the saved file from 'eenadu.xyz' to 'eenadu.ttf'." textAlign="left"  paddingLeft="1" paddingTop="1"/>
+			<mx:Text text="3. Install Font as below." textAlign="left"  paddingLeft="1" paddingTop="1" />
+			<mx:Text text="		a. Click on Start button -> Go to Control Panel -> Double click on FONTS folder." textAlign="left"  paddingLeft="1" paddingTop="1" />
+			<mx:Text text="		b. Click File menu -> Install New Font -> Select the location of eenadu.ttf -> Click Ok." textAlign="left"  paddingLeft="1" paddingBottom="1"/>
+		</mx:VBox>
+		<mx:VBox width="100%" verticalAlign="middle" height="100%">
+			<mx:Button label="Download Eenadu Font" mouseDownEffect="{shrink}" mouseUpEffect="{revert}" icon="{DownloadImg}" click="downloadFont(EENADU)" verticalCenter="true"/>
+		</mx:VBox>
+	</mx:HBox>
+	
+	<mx:HBox width="95%" styleName="styleControlTabNavigator" label="Sakshi" horizontalAlign="center">
+		<mx:VBox width="100%">
+			<mx:Text text="1. Click on DOWNLOAD available on right side button." textAlign="left" paddingTop="1" paddingLeft="1"/>
+			<mx:Text text="2. After downloading the font file (SW908.TTF) on your Desktop." textAlign="left"  paddingLeft="1" paddingTop="1"/>
+			<mx:Text text="3. COPY the font file from your DESKTOP ." textAlign="left"  paddingLeft="1" paddingTop="1" />
+			<mx:Text text="		a. Click on Start button -> Go to Control Panel -> Double click on FONTS folder." textAlign="left"  paddingLeft="1" paddingTop="1" />
+			<mx:Text text="		b. Click File menu -> Install New Font -> Select the location of SW908.ttf -> Click Ok." textAlign="left"  paddingLeft="1" paddingBottom="1"/>
+		</mx:VBox>
+		<mx:VBox width="100%" verticalAlign="middle" height="100%">
+			<mx:Button label="Download Sakshi Font" mouseDownEffect="{shrink}" mouseUpEffect="{revert}" icon="{DownloadImg}" click="downloadFont(SAKSHI)"/>
+		</mx:VBox>
+	</mx:HBox>
+	
+	<mx:HBox width="95%" styleName="styleControlTabNavigator" label="AndhraJyothi" horizontalAlign="center">
+		<mx:VBox width="100%">
+			<mx:Text text="1. Click on DOWNLOAD available on right side button." textAlign="left" paddingTop="1" paddingLeft="1"/>
+			<mx:Text text="2. After downloading the font file (SHREE900.TTF) on your Desktop." textAlign="left"  paddingLeft="1" paddingTop="1"/>
+			<mx:Text text="3. COPY the font file from your DESKTOP ." textAlign="left"  paddingLeft="1" paddingTop="1" />
+			<mx:Text text="		a. Click on Start button -> Go to Control Panel -> Double click on FONTS folder." textAlign="left"  paddingLeft="1" paddingTop="1" />
+			<mx:Text text="		b. Click File menu -> Install New Font -> Select the location of SHREE900.ttf -> Click Ok." textAlign="left"  paddingLeft="1" paddingBottom="1"/>
+		</mx:VBox>
+		<mx:VBox width="100%" verticalAlign="middle" height="100%">
+			<mx:Button label="Download AndhraJyothi Font" mouseDownEffect="{shrink}" mouseUpEffect="{revert}" icon="{DownloadImg}" click="downloadFont(ANDHRAJYOTHI)"/>
+		</mx:VBox>
+	</mx:HBox>
+	
+	<mx:HBox width="95%" styleName="styleControlTabNavigator" label="Vaartha" horizontalAlign="center">
+		<mx:VBox width="100%">
+			<mx:Text text="1. Click on DOWNLOAD available on right side button." textAlign="left" paddingTop="1" paddingLeft="1"/>
+			<mx:Text text="2. After downloading the font file (vaartha.TTF) on your Desktop." textAlign="left"  paddingLeft="1" paddingTop="1"/>
+			<mx:Text text="3. COPY the font file from your DESKTOP ." textAlign="left"  paddingLeft="1" paddingTop="1" />
+			<mx:Text text="		a. Click on Start button -> Go to Control Panel -> Double click on FONTS folder." textAlign="left"  paddingLeft="1" paddingTop="1" />
+			<mx:Text text="		b. Click File menu -> Install New Font -> Select the location of vaartha.ttf -> Click Ok." textAlign="left"  paddingLeft="1" paddingBottom="1"/>
+		</mx:VBox>
+		<mx:VBox width="100%" verticalAlign="middle" height="100%">
+			<mx:Button label="Download Vaartha Font" mouseDownEffect="{shrink}" mouseUpEffect="{revert}" icon="{DownloadImg}" click="downloadFont(VAARTHA)"/>
+		</mx:VBox>
+	</mx:HBox>
+	</mx:VBox>
+	
+</mx:Canvas>

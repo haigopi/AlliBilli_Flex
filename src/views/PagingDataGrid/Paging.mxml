@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" >
+	<mx:Style>
+		.normal {
+			fillAlphas: 1.0, 1.0;
+			fillColors: #EAE1E1, #EAE1E1;
+			fontSize: 7;
+		}
+		.selected {
+			fillAlphas: 1.0, 1.0;
+			fillColors: #958F8F, #EAE1E1;
+			fontSize: 7;
+		}
+	</mx:Style>
+	<mx:Script>
+		<![CDATA[
+			
+			import mx.events.ScrollEvent;
+			import mx.binding.utils.ChangeWatcher;
+			import mx.events.ListEvent;
+			import mx.events.FlexEvent;
+			import mx.messaging.channels.StreamingAMFChannel;
+			import mx.controls.Button;
+			import mx.events.CollectionEvent;
+			import mx.collections.ArrayCollection;
+			import mx.controls.DataGrid;
+			
+			/**
+			 * data grid for which to display paging info
+			 */ 
+			private var _dataGrid:DataGrid;
+			/**
+			 * data provider retrieve it from data grid 
+			 * this code assumes you use an arrayCollection as a data provider
+			 */ 
+			private var _dataProvider:ArrayCollection;
+			/**
+			 * how many rows are displayed in the same time by the data grid
+			 */ 
+			private var _viewRowsNo:int = 0;
+			/**
+			 * total number of pages we need to display the whole data provider
+			 */ 
+			private var _pagesNo:int;
+			/**
+			 * current button selected
+			 */
+			private var _buttonSelected:Button;
+			/**
+			 * the last current page rendered as a button
+			 */ 
+			private var _lastCurrentPage:int;
+			/**
+			 * For how many pages to make buttons
+			 */ 
+			private static const MAX_PAGES:int = 5;
+			/**
+			 * Setter. It sets the data grid for which to make the paging.
+			 */ 
+			public function set dataGrid(dataGrid:DataGrid):void {
+				if (dataGrid != null && _dataGrid == null) {
+					_dataGrid = dataGrid;
+					_dataGrid.addEventListener(MyDataGrid.UPDATEROWCOUNT, updateUI);
+					_dataGrid.addEventListener(ScrollEvent.SCROLL, scrollListener);
+					_dataGrid.addEventListener(CollectionEvent.COLLECTION_CHANGE, updateUI);
+				}
+			}
+			/**
+			 * this is called when the data grid receives a new data provider or just finished the
+			 * rendering for a new data provider
+			 */ 
+			private function updateUI(event:Event=null):void {
+				if (event is CollectionEvent && (event as CollectionEvent).items.length == 0)
+					return;
+				else
+					myContainer.removeAllChildren(); //remove the buttons	
+				if (_dataProvider != null && 
+						_dataGrid.dataProvider != null &&
+						_dataProvider.length == _dataGrid.dataProvider.length)
+					return;
+				_viewRowsNo = _dataGrid.rowCount - 1;
+				_dataProvider = _dataGrid.dataProvider as ArrayCollection;
+				_pagesNo = Math.ceil(_dataProvider.length / _viewRowsNo);
+				drawUI(0);		
+			}
+			
+			/**
+			 * This method is adding/changing the buttons to stage.
+			 * @param first page to be displayed
+			 */ 
+			private function drawUI(startPage:int):void {
+				var label:int;
+				var max:int = _pagesNo;
+				if (_pagesNo > MAX_PAGES) {
+					max = ((MAX_PAGES + startPage) > _pagesNo ) ? _pagesNo : (MAX_PAGES + startPage);
+				}
+				//reuse existent buttons
+				var arr:Array = myContainer.getChildren();
+				var i:int; 
+				var button:Button;
+				if (arr.length != 0) {
+					var j:int = 1;
+					for (i = startPage; i<max; i++) {
+						button = arr[j++] as Button;
+						reuseButton(button, (i + 1).toString(),  "Page " + (i + 1).toString(), i);
+					}
+				} else {
+					//add buttons
+					myContainer.addChild(createButton("<<", "First Page", 0));
+					for (i = startPage; i<max; i++) {
+						button = createButton((i + 1).toString(),  "Page " + (i + 1).toString(), i);
+						//select the first button
+						if (i == startPage && (_lastCurrentPage == 0 || startPage >= _lastCurrentPage)) {
+							label = i * _viewRowsNo + 1;
+							_buttonSelected = button;
+							button.styleName = "selected";
+						//select the last button
+						} else if (startPage < _lastCurrentPage && i == (max - 1)) {
+							label = i * _viewRowsNo + 1;
+							_buttonSelected = button;
+							button.styleName = "selected";
+						}
+						myContainer.addChild(button);
+					}
+					myContainer.addChild(createButton(">>", "Last Page", _pagesNo));
+				}	
+				setCurrentRecords(label);
+				_lastCurrentPage = max - 1;
+			} 
+			
+			/**
+			 * listener called when a button is clicked;
+			 * move the scroll and change the style of the buttons
+			 */ 
+			private function clickListener(event:MouseEvent):void {
+				//remove the selected style for the previous button
+				scrollListener();
+				_buttonSelected = event.target as Button;
+				_buttonSelected.styleName = "selected";
+				var page:int = _buttonSelected.data as int;
+				var index:int = page * _viewRowsNo;	
+				_dataGrid.scrollToIndex(0); 			
+				if (!_dataGrid.scrollToIndex(index)) {
+					_dataGrid.scrollToIndex(index + 1); 			
+					_dataGrid.scrollToIndex(index); 			
+				} 
+				//check if we need to redraw the buttons
+				if (_lastCurrentPage == page && _pagesNo > _lastCurrentPage) {
+					//draw next buttons 
+					drawUI(page);
+				} else if (page != 0 && page == (_lastCurrentPage - MAX_PAGES + 1) ) {
+					//draw prev buttons
+					page = ((_lastCurrentPage - MAX_PAGES) > 0) ? (_lastCurrentPage - (MAX_PAGES -1) * 2) : 0;
+					drawUI(page);
+				} 
+				setCurrentRecords(index + 1);
+			}
+			
+			/**
+			 * updates the text that displays what records are in the current view
+			 */ 
+			private function setCurrentRecords(min:int):void {
+				min = (min + _viewRowsNo - 1) > _dataProvider.length ? _dataProvider.length  - _viewRowsNo + 1 : min ;
+				info.text = "Displaying " + min + "-" + (min + _viewRowsNo - 1) + " out of " + _dataProvider.length + " records" ;
+			}
+			
+			/**
+			 * Deselect the current button selected;
+			 * @param scroll event
+			 */ 
+			private function scrollListener(event:ScrollEvent=null):void {
+				if (_buttonSelected != null)
+					_buttonSelected.styleName = "normal";
+				if (event == null || event.direction != "vertical")
+					return;
+				var pos:int = event.position;
+				var page:int = Math.floor(pos / _viewRowsNo);
+				drawUI(page);
+				setCurrentRecords(pos + 1);
+			}
+			
+			/**
+			 * Factory method for creating buttons
+			 * @param label
+			 * @param tool tip
+			 * @param data to be stored
+			 * @return a button instance
+			 */ 
+			private function createButton(label:String, tip:String, data:int):Button {
+				var b:Button = new Button();
+				b.styleName = "normal";
+				b.label = label;
+				b.toolTip = tip;
+				b.data = data;
+				b.width = 44;
+				b.height = 18;
+				b.addEventListener(MouseEvent.CLICK, clickListener);
+				return b;
+			}
+			/**
+			 * Reusing an existent button
+			 * @param button to be reused
+			 * @param label
+			 * @param tool tip
+			 * @param data to be stored
+			 * @return a button instance
+			 */ 
+			private function reuseButton(b:Button, label:String, tip:String, data:int):void {
+				b.label = label;
+				b.toolTip = tip;
+				b.data = data;
+			}
+		]]>
+	</mx:Script>
+	<mx:HBox width="100%" textAlign="right">
+		<!-- this is holding the info text -->
+		<mx:Label id="info" text=""/>
+	</mx:HBox>
+	<!-- this is holding our buttons -->
+	<mx:HBox id="myContainer" textAlign="center" width="100%"/>
+</mx:VBox>

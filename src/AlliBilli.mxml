@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+				layout="absolute"
+				xmlns:head="head.*"
+				initialize="init()"
+				xmlns:Extended="com.*"
+				creationComplete="creationComplete(event)"
+				width="100%"
+				height="100%">
+	<mx:Style source="css/flexStyleExplorer.css"/>
+<!--	<mx:HTTPService resultFormat="e4x"
+					method="GET"
+					useProxy="false"
+					id="countPlaceMyAdDS"
+					url="http://services.allibilli.com/countService.jsp"
+					result="onCompleteCountPlaceMyAdSerice(event)"
+					showBusyCursor="true"/>
+	<mx:HTTPService resultFormat="e4x"
+					method="GET"
+					useProxy="false"
+					id="mstTimeDS"
+					url="http://services.allibilli.com/getTimeDetails.jsp"
+					result="onCompleteESTTimeSerice(event)"
+					showBusyCursor="true"/> -->
+	<mx:HTTPService resultFormat="e4x"
+					method="GET"
+					useProxy="false"
+					id="jokeDS"
+					url="http://www.allibilli.com/flex4/jokeDayAndNews.xml"
+					result="handleJokeDayDataXML(event)"
+					showBusyCursor="true"/>
+	<mx:Script source="as/main.as"/>
+	<mx:Script>
+		<![CDATA[
+			import events.AlliBilliEvent;
+			import com.MyCustomEvent;
+			import com.IFrame;
+			import mx.containers.HBox;
+			import mx.containers.VBox;
+			import mx.controls.Tree;
+			import mx.events.ItemClickEvent;
+			import mx.events.ListEvent;
+			import xmlBuilder.BuildXML;
+			import mx.utils.ObjectUtil;
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+
+			private var allXML:BuildXML=new BuildXML();
+			private var myAcc:VBox;
+			private var myTree:Tree;
+			private var mapper:Object;
+			private var mapperArray:Array=new Array();
+
+			private function buildTree_in_acc(evt:AlliBilliEvent):void
+			{
+				var xml:XML=evt.accTreeBuild_XML;
+				trace(xml.@accordianId);
+				if (mapperArray != null)
+				{
+					var foundObject:*=mapperArray[xml.@accordianId];
+					if (foundObject != null)
+					{
+						trace(" -- " + foundObject);
+						var tree:Tree=new Tree();
+						tree.dataProvider=xml;
+						tree.labelField="@label";
+						tree.showRoot=false;
+						tree.percentHeight=100;
+						tree.percentWidth=100;
+						tree.horizontalScrollPolicy="on";
+
+						var vBox:VBox=foundObject.ACCORDIAN as VBox;
+						vBox.removeAllChildren();
+						if (foundObject.ACCORDIAN_SIDE == "left")
+							tree.addEventListener("change", leftTreeChange);
+						else
+							tree.addEventListener("change", rightTreeChange);
+						vBox.addChild(tree);
+						expnadAllTrees(xml, tree);
+					}
+				}
+			}
+
+			private function leftTreeChange(evt:ListEvent):void
+			{
+				rightShrink.duration=0;
+				closeRightPane();
+				rightShrink.duration=400;
+				treeChange(evt);
+			}
+
+			private function rightTreeChange(evt:ListEvent):void
+			{
+				leftShrink.duration=0;
+				closeLeftPane();
+				leftShrink.duration=400;
+				treeChange(evt);
+			}
+
+			private function treeChange(evt:ListEvent):void
+			{
+
+				var selectedNode:XML=Tree(evt.target).selectedItem as XML;
+				var url:String=selectedNode.@url
+				if (url == '')
+				{
+					Tree(evt.target).expandItem(selectedNode, true);
+					return;
+				}
+				else if (!checkForExistsingTabInMain(selectedNode.@label))
+				{
+					var htmlIFrame:IFrame=null;
+					htmlIFrame=new IFrame();
+					htmlIFrame.label=selectedNode.@label;
+					htmlIFrame.width=tabNavigator.width;
+					htmlIFrame.height=tabNavigator.height;
+					htmlIFrame.id=selectedNode.@name + "_id";
+					htmlIFrame.source=url;
+					tabNavigator.addChild(htmlIFrame);
+					tabNavigator.selectedIndex=tabNavigator.getChildren().length - 1;
+				}
+			}
+
+			public function checkForExistsingTabInMain(lblCheck:String):Boolean
+			{
+				var returnBoolean:Boolean=false;
+				var allChildsArray:Array=tabNavigator.getChildren();
+				for each (var x:Object in allChildsArray)
+				{
+					if (ObjectUtil.stringCompare(x.label, lblCheck, true) == 0)
+					{
+						returnBoolean=true;
+						tabNavigator.selectedIndex=allChildsArray.indexOf(x);
+						break;
+					}
+				}
+				return returnBoolean;
+			}
+
+			private function refreshTab(evt:ItemClickEvent):void
+			{
+				tabNavigator.selectedIndex=evt.index;
+				handleReload();
+			}
+		]]>
+	</mx:Script>
+	<mx:Array id="optionsBar">
+		<mx:Object label="AlliBilli Search"/>
+		<mx:Object id="countForum"
+				   label="Suggestion Forum"/>
+		<mx:Object label="Font Help"/>
+	</mx:Array>
+
+	<mx:HBox id="allTop"
+			 width="100%"
+			 height="100%"
+			 paddingTop="10"
+			 paddingLeft="10"
+			 paddingRight="10"
+			 paddingBottom="10"
+			 cacheAsBitmap="true">
+		<mx:Canvas width="200"
+				   height="100%"
+				   id="leftCanvas">
+			<mx:Box width="100%"
+					height="100%"
+					styleName="fseControlBar"/>
+			<mx:Box width="100%"
+					height="100%"
+					styleName="fseControlBar"
+					backgroundAlpha="1">
+				<mx:filters>
+					<flash.filters:BevelFilter xmlns:flash.filters="flash.filters.*"
+											   angle="90"
+											   blurX="1"
+											   blurY="1"
+											   distance="1"
+											   highlightAlpha=".4"
+											   shadowAlpha=".4"
+											   highlightColor="0x000000"
+											   shadowColor="0xFFFFFF"
+											   knockout="true"/>
+				</mx:filters>
+			</mx:Box>
+			<head:GlassHeaders top="1"
+							   id="leftBoxLbl"
+							   headerTitle="USERS"
+							   click="discloseLeftNav()"
+							   toolTip="Click to Expand or Shrink"
+							   useHandCursor="true"/>
+
+			<mx:Image source="{isLeftClosed == false?(closeNav):openNav}"
+					  useHandCursor="true"
+					  buttonMode="true"
+					  mouseChildren="false"
+					  id="closeNavBtn"
+					  right="5"
+					  click="discloseLeftNav()"
+					  top="5"/>
+			<mx:Box id="leftNavStack"
+					left="5"
+					top="30"
+					bottom="20"
+					right="5"
+					width="100%"
+					height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+
+				<mx:Accordion id="leftAcc"
+							  height="100%"
+							  width="100%">
+				</mx:Accordion>
+			</mx:Box>
+		</mx:Canvas>
+		<!--  START CENTER PANEL -->
+		<mx:VBox id="centerPnl"
+				 width="100%"
+				 height="100%"
+				 styleName="glassPods"
+				 horizontalScrollPolicy="auto"
+				 verticalScrollPolicy="auto"
+				 top="20"
+				 paddingLeft="10"
+				 paddingRight="10">
+			<head:GlassHeaders headerTitle="THINK SPECIAL"/>
+			<Extended:extended_TabNavigator creationPolicy="all"
+											CloseClick="trace('close clicked')"
+											id="tabNavigator"
+											width="120%"
+											height="100%"
+											styleName="styleControlTabNavigator"
+											paddingLeft="10"
+											paddingRight="10">
+				<mx:VBox width="100%"
+						 height="100%"
+						 verticalScrollBarStyleName="fseVerticalScrollBar"
+						 horizontalScrollBarStyleName="fseVerticalScrollBar"
+						 icon="{bmlip}"
+						 label="AlliBilli"
+						 horizontalScrollPolicy="auto"
+						 verticalScrollPolicy="off">
+
+					<mx:Label width="100%"
+							  text="Alli Billi"
+							  styleName="styleExplorerTitleAlliBilli"
+							  textAlign="center"
+							  id="AlliBilliLogo" toolTip="Think Special - AlliBilli">
+						<mx:filters>
+							<flash.filters:DropShadowFilter xmlns:flash.filters="flash.filters.*"
+															angle="90"
+															blurX="5"
+															blurY="5"
+															distance="2"
+															alpha=".3"
+															color="0x000000"/>
+						</mx:filters>
+					</mx:Label>
+					<mx:Text width="100%"
+							 text="Helping hands are purer than saying lips. Let your friend know about AlliBilli."
+							 styleName="styleExplorerTitle"
+							 textAlign="center" toolTip="AlliBilli Quote">
+						<mx:filters>
+							<flash.filters:DropShadowFilter xmlns:flash.filters="flash.filters.*"
+															angle="90"
+															blurX="5"
+															blurY="5"
+															distance="2"
+															alpha=".3"
+															color="0x000000"/>
+						</mx:filters>
+					</mx:Text>
+					<mx:HBox width="100%">
+						<mx:HBox width="50%"
+								 cornerRadius="9"
+								 borderColor="#cccccc"
+								 borderStyle="solid" toolTip="General Info">
+							<mx:TextArea width="100%"
+										 height="150"
+										 text="PLACE JOKE MSG"
+										 styleName="jokeDaayTextArea"
+										 textAlign="center"
+										 paddingTop="20"
+										 id="jokeDayNavDataTxt"
+										 editable="false">
+								<mx:filters>
+									<flash.filters:DropShadowFilter xmlns:flash.filters="flash.filters.*"
+																	angle="90"
+																	blurX="5"
+																	blurY="5"
+																	distance="2"
+																	alpha=".3"
+																	color="0x000000"/>
+								</mx:filters>
+							</mx:TextArea>
+						</mx:HBox>
+						<mx:HBox width="50%"
+								 cornerRadius="9"
+								 borderColor="#cccccc"
+								 borderStyle="solid" toolTip="New features that are added to Site">
+							<mx:TextArea width="100%"
+										 height="150"
+										 text="Site Updates"
+										 styleName="jokeDaayTextArea"
+										 textAlign="center"
+										 paddingTop="20"
+										 id="siteUpdates"
+										 editable="false">
+								<mx:filters>
+									<flash.filters:DropShadowFilter xmlns:flash.filters="flash.filters.*"
+																	angle="90"
+																	blurX="5"
+																	blurY="5"
+																	distance="2"
+																	alpha=".3"
+																	color="0x000000"/>
+								</mx:filters>
+							</mx:TextArea>
+						</mx:HBox>
+					</mx:HBox>
+
+					<mx:HBox width="100%" cornerRadius="9"
+							 borderColor="#cccccc"
+							 borderStyle="solid" horizontalAlign="center" verticalAlign="middle">
+						<mx:VBox horizontalAlign="center">
+							<mx:Text text="EST"/>
+							<mx:Text id="estTime"/>
+						</mx:VBox>
+
+						<mx:VBox horizontalAlign="center">
+							<mx:Text text="CST"/>
+							<mx:Text id="cstTime"/>
+						</mx:VBox>
+
+						<mx:VBox horizontalAlign="center">
+							<mx:Text text="MST"/>
+							<mx:Text id="mstTime"/>
+						</mx:VBox>
+
+						<mx:VBox horizontalAlign="center">
+							<mx:Text text="PST"/>
+							<mx:Text id="pstTime"/>
+						</mx:VBox>
+
+						<mx:VBox horizontalAlign="center">
+							<mx:Text text="AST"/>
+							<mx:Text id="astTime"/>
+						</mx:VBox>
+						<mx:VBox horizontalAlign="center">
+							<mx:Text text="HST"/>
+							<mx:Text id="hstTime"/>
+						</mx:VBox>
+						<mx:VBox horizontalAlign="center">
+							<mx:Text text="ARIZONA"/>
+							<mx:Text id="arizona"/>
+						</mx:VBox>
+						<mx:VBox horizontalAlign="center">
+							<mx:Text text="INDIA"/>
+							<mx:Text id="indTime"/>
+						</mx:VBox>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						
+						<mx:HBox width="70%" height="100%"
+								 cornerRadius="9"
+								 borderColor="#cccccc"
+								 borderStyle="solid" verticalScrollPolicy="off" toolTip="Live Job requirements that are going on...">
+
+							<mx:TextArea width="100%"
+										 height="100%"
+										 text="WalkIn-Jobs"
+										 styleName="jokeDaayTextArea"
+										 textAlign="center"
+										 paddingTop="20"
+										 id="jobs"
+										 editable="false"
+										 verticalScrollPolicy="auto"
+										 verticalScrollBarStyleName="fseVerticalScrollBar">
+							</mx:TextArea>
+							
+						</mx:HBox>
+						<mx:VBox width="40%" height="100%" id="youTubePlayBox"
+								 cornerRadius="9"
+								 borderColor="#cccccc"
+								 borderStyle="solid" horizontalAlign="center" verticalAlign="middle" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+							<mx:Label id="youTubeCaption"/>
+							<mx:Spacer/>
+						</mx:VBox>
+					</mx:HBox>
+
+				</mx:VBox>
+
+			</Extended:extended_TabNavigator>
+
+			<mx:HBox width="100%"
+					 paddingRight="5"
+					 paddingBottom="5">
+				<mx:Box width="90%"
+						horizontalAlign="left">
+
+					<mx:LinkBar id="linkBar"
+								dataProvider="{optionsBar}"
+								itemClick="handleLinkBarClick(event)"/>
+
+				</mx:Box>
+				<mx:HBox width="10%"
+						 horizontalAlign="right">
+					<mx:LinkButton id="expandLink"
+								   label="Expand"
+								   styleName="expandLink"
+								   textAlign="right"
+								   click="handleExpand(event)"
+								   toolTip="Expand the left and right panes."/>
+					<mx:LinkButton id="reloadFrame"
+								   label="Reload"
+								   styleName="reloadLink"
+								   textAlign="right"
+								   click="handleReload()"
+								   toolTip="Reload the current seeing tab."/>
+					<mx:LinkButton id="fullScreeen"
+								   label="FullScreen"
+								   styleName="fullScreen"
+								   textAlign="right"
+								   click="toggleFullScreen()"
+								   toolTip="Keep Your browser fullscreen."/>
+				</mx:HBox>
+			</mx:HBox>
+
+		</mx:VBox>
+		<!-- END CENTER PANEL-->
+		<mx:Canvas width="200"
+				   height="100%"
+				   id="rightCanvas">
+
+			<mx:Box width="100%"
+					height="100%"
+					styleName="fseControlBar">
+			</mx:Box>
+			<mx:Box width="100%"
+					height="100%"
+					styleName="fseControlBar"
+					backgroundAlpha="1">
+				<mx:filters>
+					<flash.filters:BevelFilter xmlns:flash.filters="flash.filters.*"
+											   angle="90"
+											   blurX="1"
+											   blurY="1"
+											   distance="1"
+											   highlightAlpha=".4"
+											   shadowAlpha=".4"
+											   highlightColor="0x000000"
+											   shadowColor="0xFFFFFF"
+											   knockout="true"/>
+				</mx:filters>
+			</mx:Box>
+
+			<mx:Image source="{isRightClosed == false?(openNav):closeNav}"
+					  useHandCursor="true"
+					  buttonMode="true"
+					  mouseChildren="false"
+					  id="closeRightNavBtn"
+					  click="discloseRightNav(event)"
+					  left="5"
+					  top="5"/>
+			<head:GlassHeaders id="rightBoxLbl"
+							   right="5"
+							   top="1"
+							   headerTitle="STUDENTS KIDS MOVIES"
+							   toolTip="Click to Expand or Shrink"
+							   useHandCursor="true"
+							   textAlign="right"
+							   click="discloseRightNav(event)"
+							   fontFamily="Myriad"/>
+
+			<mx:Box left="5"
+					top="30"
+					bottom="20"
+					right="5"
+					width="100%"
+					height="100%"
+					id="rightPnl">
+
+				<mx:Accordion id="rightAcc"
+							  height="100%"
+							  width="100%">
+				</mx:Accordion>
+
+			</mx:Box>
+
+		</mx:Canvas>
+
+	</mx:HBox>
+	<mx:Resize id="leftShrink"
+			   widthTo="25"
+			   target="{leftCanvas}"
+			   duration="400"
+			   effectEnd="leftBoxLbl.visible=false; leftAcc.visible = false;"/>
+	<mx:Resize id="leftGrow"
+			   widthTo="180"
+			   target="{leftCanvas}"
+			   duration="400"
+			   effectEnd="leftAcc.visible = true;leftBoxLbl.visible=true; "/>
+
+	<mx:Resize id="rightShrink"
+			   widthTo="25"
+			   target="{rightCanvas}"
+			   duration="400"
+			   effectEnd="rightBoxLbl.visible=false; rightAcc.visible = false; "/>
+	<mx:Resize id="rightGrow"
+			   widthTo="180"
+			   target="{rightCanvas}"
+			   duration="400"
+			   effectEnd="rightAcc.visible = true; rightBoxLbl.visible=true;"/>
+
+</mx:Application>

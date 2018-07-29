@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:head="layout.*"
+	creationComplete="_init_PlaceAnAdView()"
+	>
+	
+	<mx:Zoom id="shrink" duration="100" zoomHeightTo=".9" zoomWidthTo=".9" />
+	<mx:Zoom id="revert" duration="50" zoomHeightTo="1" zoomWidthTo="1" />
+
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ValidationResultEvent;
+			import mx.validators.Validator;
+			import com.MyRoomMateEvent;
+			import mx.collections.ArrayCollection;
+		
+		[Bindable]
+		private var countryList:XML = <countries> <country>USA</country> <country>UK</country> <country>AUSTRALIA</country> <country>INDIA</country> </countries>;
+		[Bindable]
+		private var adTitlesList:XML = <titles> <title>Need Roommate</title> <title>New Movie</title> </titles>;
+		
+		[Bindable]
+		[Embed(source='assets/go.png')]
+     	private var submitIcon:Class;
+     	
+     	[Bindable]
+        public var formIsValid:Boolean = false;
+        private var focussedFormControl:DisplayObject;
+        
+     	public function placeMyAd(event:Event): void
+		{
+			cursorManager.setBusyCursor();
+			var formDataCollection:ArrayCollection = new ArrayCollection();
+			formDataCollection.addItem("country="+countryId.text);
+			formDataCollection.addItem("adTitle="+adTitle.text);
+			formDataCollection.addItem("name="+myName.text);
+			formDataCollection.addItem("gendar="+radioGroup.selectedValue);
+			formDataCollection.addItem("contatNumber="+contatNumber.text);
+			formDataCollection.addItem("contactEmail="+contactEmail.text);
+			formDataCollection.addItem("description="+description.text);
+			formDataCollection.addItem("city="+cityId.text);
+			formDataCollection.addItem("state="+stateId.text);
+			
+			var myEvent:MyRoomMateEvent = new MyRoomMateEvent(MyRoomMateEvent.PlaceMyAddEvent,true, true);
+			myEvent.setDataCollection(formDataCollection);
+			dispatchEvent(myEvent);
+		}
+		public function _init_PlaceAnAdView(): void
+		{
+			focusManager.setFocus(cityId);
+		}
+		private function validateForm(event:Event):void 
+        {                    
+            focussedFormControl = event.target as DisplayObject;    
+            formIsValid = true;            
+            validate(nameValidator);                
+            validate(emailValidator);
+            validate(adTitleValidator);
+            validate(cityValidator);
+            validate(stateValidator);
+            validate(descValidator);
+        }
+         private function validate(validator:Validator):Boolean
+         {                
+            var validatorSource:DisplayObject = validator.source as DisplayObject;
+            var suppressEvents:Boolean = (validatorSource != focussedFormControl);
+            var event:ValidationResultEvent = validator.validate(null, suppressEvents); 
+            var currentControlIsValid:Boolean = (event.type == ValidationResultEvent.VALID);
+            formIsValid = formIsValid && currentControlIsValid;
+            return currentControlIsValid;
+          }
+		]]>
+	</mx:Script>
+	<mx:EmailValidator id="emailValidator" source="{contactEmail}" property="text" required="true"/>
+	<mx:StringValidator id="nameValidator" source="{myName}" property="text" minLength="1" required="true"/>
+	<mx:StringValidator id="adTitleValidator" source="{adTitle}" property="text" minLength="5" required="true" maxLength="100"/>
+	<mx:StringValidator id="cityValidator" source="{cityId}" property="text" minLength="1" required="true"/>
+	<mx:StringValidator id="stateValidator" source="{stateId}" property="text" minLength="2" maxLength="2" required="true"/>
+	<mx:StringValidator id="descValidator" source="{description}" property="text" minLength="10" required="true" maxLength="4000"/>
+       
+	<mx:Panel width="100%" height="100%" styleName="glassPods" horizontalScrollPolicy="auto" verticalScrollPolicy="auto">
+	<mx:Box width="100%" styleName="styleControlTabNavigator" label="Rules and Regulars">
+		<mx:Text text="1. AlliBilli is having all rights to remove any Ad any point of time." textAlign="left" paddingTop="5" paddingLeft="10"/>
+		<mx:Text text="2. Any Ad will be displayed only for 15 days." textAlign="left"  paddingLeft="10" paddingTop="5" paddingBottom="5"/>
+		<mx:Text text="3. Placing multiple Ads from a Single Browser is restricted." textAlign="left"  paddingLeft="10"/>
+	</mx:Box>
+	
+	<mx:Box width="100%"  height="100%"  styleName="styleControlTabNavigator" paddingLeft="10" paddingRight="10">
+	<head:GlassHeaders headerTitle="AD PLACING CENTER"/>
+		<mx:RadioButtonGroup id="radioGroup" />
+		<mx:Form width="100%" height="100%">
+			
+			<mx:FormItem label="Select or Eneter Country Name :" required="true">
+				<mx:ComboBox id="countryId" editable="true" dataProvider="{countryList.country}">
+				</mx:ComboBox>
+			</mx:FormItem>	
+			
+			<mx:FormItem label="City and State" required="true">
+			<mx:HBox width="100%" horizontalAlign="right">
+				<mx:TextInput id="cityId" />
+				<mx:TextInput id="stateId" /> <mx:Label text="State is a 2 Letter char, Eg: MO, MN, NJ, IN, AP, KT etc..."/>
+			</mx:HBox>
+			</mx:FormItem>
+				
+			<mx:FormItem label="Select or Enter your title :" required="true" width="100%">
+				<mx:ComboBox id="adTitle" editable="true" width="100%" dataProvider="{adTitlesList.title}" change="validateForm(event)">
+				</mx:ComboBox>
+			</mx:FormItem>
+			<mx:FormItem label="Name and Gendar : " required="true" >
+				<mx:HBox width="100%">
+					<mx:TextInput id="myName" change="validateForm(event)"/> <mx:RadioButton id="male" label="Male" selected="true" group="{radioGroup}"/> <mx:RadioButton id="female" label="Female" group="{radioGroup}"/>
+				</mx:HBox>
+			</mx:FormItem>
+			<mx:FormItem label="Contact Number : ">
+				<mx:TextInput id="contatNumber" />
+			</mx:FormItem>
+			<mx:FormItem label="Contact Email : " required="true">
+				<mx:TextInput id="contactEmail" change="validateForm(event)"/>
+			</mx:FormItem>
+			<mx:FormItem label="Description: " width="100%" required="true">
+				<mx:TextArea id="description" height="100%" width="100%" change="validateForm(event)"/>
+			</mx:FormItem>
+			<mx:FormItem>
+				<mx:HBox width="100%">
+					<mx:Button id="adSubmit" label="Place my Ad" mouseDownEffect="{shrink}" mouseUpEffect="{revert}"  icon="{submitIcon}" click="placeMyAd(event)" enabled="{formIsValid}"/> 
+					<mx:Button id="listAll" label="Cancel Placing Ad" mouseDownEffect="{shrink}" mouseUpEffect="{revert}"  icon="{submitIcon}"/>
+				</mx:HBox>
+			</mx:FormItem>
+				
+		</mx:Form>
+		
+		<mx:Label width="100%" text="Alli Billi" styleName="styleExplorerTitleAlliBilli" textAlign="center">
+            		<mx:filters>
+                  	<flash.filters:DropShadowFilter xmlns:flash.filters="flash.filters.*" angle="90" blurX="5" blurY="5"
+                       distance="2" alpha=".3" color="0x000000" />
+              		</mx:filters>
+        </mx:Label>
+	</mx:Box>
+	
+	</mx:Panel>
+
+</mx:Canvas>

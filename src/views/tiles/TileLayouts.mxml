@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%">
+
+<mx:HTTPService resultFormat="e4x" method="GET" useProxy="false" id="tilesDS" showBusyCursor="true" 
+			result="tilesResultService(event)" fault="tilesFaultService(event)"/>
+<mx:Script>
+	<![CDATA[
+		import mx.collections.XMLListCollection;
+		import mx.controls.Image;
+		import mx.utils.ArrayUtil;
+		import mx.rpc.xml.SimpleXMLDecoder;
+		import mx.collections.ArrayCollection;
+		import mx.controls.Alert;
+		import mx.rpc.events.FaultEvent;
+		import mx.rpc.events.ResultEvent;
+		public var url:String ="http://localhost:8080/AlliBilliServices/getTilesDetails.jsp";
+		
+		[Bindable]
+		private var tileList: ArrayCollection = new ArrayCollection();
+		public function loadData(resultEventevent:Event):void
+		{
+			Alert.show("SENDING REQ");
+			tilesDS.url=this.url;
+			tilesDS.send();
+		}
+		
+		
+		public function tilesResultService(resultEvent:ResultEvent):void
+		{
+			tileList =resultEvent.result as ArrayCollection;
+			Alert.show(tileList.length+"");
+		}
+		
+		public function tilesFaultService(resultEvent:FaultEvent):void
+		{
+			Alert.show("ERROR REQ");
+		}
+	]]>
+</mx:Script>
+	
+		<mx:TileList id="myTiles" width="100%" height="100%" dataProvider="{tileList}">
+		</mx:TileList>
+
+</mx:Canvas>

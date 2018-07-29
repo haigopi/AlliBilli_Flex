@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" horizontalAlign="center">
+<mx:Script>
+	<![CDATA[
+		
+	import flash.utils.Timer;
+	import flash.events.TimerEvent;
+	
+	private var timer:Timer;
+	
+	private function init():void {
+		this.timer = new Timer(1000);
+		this.timer.addEventListener(TimerEvent.TIMER, this.resetNow);
+		this.timer.start();
+	}
+	private function resetNow(event:TimerEvent):void {
+		this.clock_EST.text = new Date().toLocaleTimeString();
+		this.clock_CST.text = new Date().toLocaleTimeString();
+		this.clock_MST.text = new Date().toLocaleTimeString();
+	}
+]]>
+</mx:Script>
+
+<mx:VBox horizontalAlign="center">
+	<mx:Text id="EST" textAlign="center" text="EST"/>
+	<mx:Text id="clock_EST" creationComplete="this.init();"  textAlign="center"/>
+</mx:VBox>
+<mx:VBox horizontalAlign="center">
+	<mx:Text id="CST" textAlign="center" text="CST"/>
+	<mx:Text id="clock_CST" creationComplete="this.init();"  textAlign="center"/>
+</mx:VBox>
+<mx:VBox horizontalAlign="center">
+	<mx:Text id="MST" textAlign="center" text="MST"/>
+	<mx:Text id="clock_MST" creationComplete="this.init();"  textAlign="center"/>
+</mx:VBox>
+</mx:HBox>	

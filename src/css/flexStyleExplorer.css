@@ -1,0 +1,619 @@
+ /* CSS file */
+ 
+
+Application {
+   /*backgroundColor: #869ca7;
+   backgroundGradientColors: #9bafb9, #68808c;
+   themeColor: #009dff;
+   color: #0b333c;
+   
+    backgroundColor: #869ca7;
+    backgroundGradientColors: #052526, #FFFFFF;
+    themeColor: #009dff;
+    color: #0b333c;
+	backgroundGradientAlphas: 0.62, 0.38;
+	borderStyle: none;
+	borderColor: #FFFFFF;
+	cornerRadius: 2; */
+	
+	fontFamily: Verdana;
+	backgroundImage: Embed(source="assets/backgrounds.swf#retroFifties");
+}
+
+.glassPanel {
+    backgroundSize: "100%";
+    backgroundImage: Embed(source="/assets/header.swf#glassHeader");
+    paddingTop: 7;
+    paddingLeft: 10;
+}
+
+.DropDownStyles {
+    dropShadowEnabled: true;
+    cornerRadius: 0;
+}
+
+.fseVerticalScrollBar {
+    downArrowUpSkin: Embed(source="/assets/downArrow.png");
+    downArrowOverSkin: Embed(source="/assets/downArrow.png");
+    downArrowDownSkin: Embed(source="/assets/downArrow.png");
+    upArrowUpSkin: Embed(source="/assets/upArrow.png");
+    upArrowOverSkin: Embed(source="/assets/upArrow.png");
+    upArrowDownSkin: Embed(source="/assets/upArrow.png");
+    thumbDownSkin: Embed(source="/assets/thumb.png",
+        scaleGridLeft="7", scaleGridTop="5", scaleGridRight="8", scaleGridBottom="7");
+    thumbUpSkin: Embed(source="/assets/thumb.png",
+        scaleGridLeft="7", scaleGridTop="5", scaleGridRight="8", scaleGridBottom="7");
+    thumbOverSkin: Embed(source="/assets/thumb.png",
+        scaleGridLeft="7", scaleGridTop="5", scaleGridRight="8", scaleGridBottom="7");
+    trackSkin: Embed(source="/assets/scrolltrack.png",
+        scaleGridLeft="7", scaleGridTop="4", scaleGridRight="8", scaleGridBottom="6" );    
+    
+}
+VScrollBar {
+   fillColors: #9bafb9, #68808c, #ffffff, #eeeeee;
+   trackColors: #9bafb9, #68808c;
+   themeColor: #000033;
+   borderColor: #006633;
+   iconColor: #009933;
+}
+
+.mySelectedButtonStyle {
+        
+}
+
+.HeaderStyle {
+    fontWeight: bold;
+    fontFamily: Verdana;
+}
+
+.DGHeaderStyle {
+    fontWeight: bold;
+    fontFamily: Verdana;
+}
+
+.fseToggleButtons {
+    buttonHeight: 18;
+    buttonWidth: 20;
+    focusAlpha: 0;
+    themeColor: #FFFFFF;
+    horizontalGap: -1;
+    buttonStyleName: "fseButtonBarStyle";    
+}
+
+.fseButtonBarStyle {
+    highlightAlphas: 0.5, 0;
+    fillAlphas: 0.5, 0.15, 0.7, 0.3;
+    fillColors: #ffffff, #000000, #ffffff, #000000;
+       borderColor: #ffffff;
+}
+
+
+.glassPods {
+    borderStyle: applicationControlBar;
+    fillColors: #FFFFFF, #FFFFFF;
+    fillAlphas: 0, 0.25;
+    highlightAlphas: 0, 0;
+    backgroundColor: #ffffff;
+    backgroundAlpha: .2;
+    borderThickness: 0;
+    dropShadowEnabled: true;
+    cornerRadius: 8;
+    paddingRight: 0;
+    paddingLeft: 0;
+    paddingTop: 0;
+    paddingBottom: 0;
+    horizontalScrollBarStyleName: fseVerticalScrollBar;
+    verticalScrollBarStyleName: fseVerticalScrollBar;
+}
+
+.myTitleStyle {
+    fontWeight: bold;
+}
+
+.sliderText {
+   backgroundAlpha: 0;
+   backgroundColor: #000000;
+   color: #ffffff;
+   borderStyle: solid;
+   borderColor: #d0d8db;
+   borderThickness: 1;
+   cornerRadius: 7;
+   textIndent: 3;
+   textAlign: right;
+}
+
+.StyledTabs {
+    fontWeight: bold;
+}
+
+.SelectedStyledTabs {
+    fontWeight: bold;
+}
+
+.StyledButtonBar {
+    
+}
+
+.glassLabels {
+    color: #FFFFFF;
+    fontSize: 12;
+    fontWeight: bold;
+    paddingLeft: 0;
+    paddingTop: 0;
+    fontFamily: Myriad;
+}
+
+.cssTextArea {
+    backgroundColor: #FFFFFF;
+    borderStyle: solid;
+    borderThickness: 0;
+    cornerRadius: 8;
+    editable: false;
+    paddingRight: 5;
+    paddingLeft: 5;
+    backgroundAlpha: .4;
+    verticalScrollBarStyleName: "fseVerticalScrollBar";
+}
+
+Form {
+    verticalGap: 0;
+    paddingTop: 0;
+    paddingBottom: 0;
+    paddingLeft: 0;
+    paddingRight: 0;
+}
+
+FormItem {
+    paddingTop: 2;
+    paddingBottom: 1;
+    verticalGap: 0;
+}
+
+.expandLink {
+    fontFamily: Verdana;
+    fontSize: 9;
+    fontWeight: normal;    
+    icon: Embed(source="/assets/undo.png");
+    rollOverColor: #FFFFFF;
+    selectionColor: #FFFFFF;
+    textSelectionColor: #000000;
+}
+.reloadLink {
+    fontFamily: Verdana;
+    fontSize: 9;
+    fontWeight: normal;    
+    icon: Embed(source="/assets/reload.png");
+    rollOverColor: #FFFFFF;
+    selectionColor: #FFFFFF;
+    textSelectionColor: #000000;
+}
+.fullScreen{
+	
+	fontFamily: Verdana;
+	fontSize: 9;
+	fontWeight: normal;    
+	icon: Embed(source="/assets/fullscreen.png");
+	rollOverColor: #FFFFFF;
+	selectionColor: #FFFFFF;
+	textSelectionColor: #000000;
+}
+.fseSliders {
+    showTrackHighlight: true;
+    dataTipStyleName: sliderTips;
+    dataTipOffset: 0;
+    thumbUpSkin: Embed(source="/assets/sliderThumb.png");
+    thumbOverSkin: Embed(source="/assets/sliderThumb_over.png");
+    thumbDownSkin: Embed(source="/assets/sliderThumb_down.png");
+    themeColor: #ffffff;
+}
+
+.sliderTips {
+    backgroundColor: #000000;
+    backgroundAlpha: .60;
+    color: #ffffff;
+    cornerRadius: 5;
+    fontFamily: verdana;
+    fontSize: 10;
+    fontWeight: normal;
+    textDecoration: none;
+    fontStyle: normal;
+}
+
+.styleControlTabNavigator {
+    paddingLeft: 5; 
+    tabWidth: 80; 
+    paddingRight: 5;
+     backgroundAlpha: 0; 
+     borderStyle: solid; 
+     borderColor: #FFFFFF; 
+     paddingBottom: 10; 
+     borderThickness: 1; 
+     cornerRadius: 4;
+     tabStyleName: "fseTabs";
+}
+
+.fseTabs {
+    cornerRadius: 6;
+    highlightAlphas: 0.4, 0;
+    fillAlphas: 0,0;
+    borderColor: #FFFFFF;
+    themeColor: #ffffff;    
+    paddingLeft: 10;
+    paddingRight: 10;
+    backgroundAlpha: 1;
+    backgroundColor: #FFFFFF;
+    color: #0B333C;
+    textRollOverColor: #0B333C;
+    fontSize: 9;
+}
+
+.fseControlBar {
+   cornerRadius: 8;
+   borderStyle: solid;
+   borderThickness: 0;
+   backgroundColor: #000000;
+   backgroundAlpha: 0.1;
+}
+
+
+.myaccordionHeader {
+   color: #000000;
+}
+
+
+Tree {
+   backgroundAlpha: 0;
+   useRollOver: true;
+   rollOverColor: #9bafb9;
+   textRollOverColor: #660066;
+   selectionColor: #839bae;
+   color: #ffffff;
+   textSelectedColor: #ffffcc;
+   fontFamily: Verdana;
+   cornerRadius: 5;
+   borderThickness: 0;
+   fontSize:11;
+   letterSpacing: 0.5;
+   defaultLeafIcon: Embed(source="assets/treeLeaf/PlayModeRepeatAllPressed.png"); 
+}
+    
+RadioButton {
+    fontWeight: bold;
+}
+
+
+.componentLinkBar {
+    rollOverColor: #cad5da;
+    selectionColor: #ffffff;
+    disabledColor: #FFFFFF;
+    fontSize: 9;
+}
+
+.conditionalBox {
+    borderStyle: solid;
+    borderThickness: 0;
+    backgroundColor: #FFFFFF;
+    backgroundAlpha: .2;
+    cornerRadius: 6;
+    horizontalAlign: right;
+    showEffect: WipeDown;
+    hideEffect: WipeUp;
+}
+
+.conditionalForm {
+    paddingTop: 4;
+    paddingBottom: 4;
+    paddingRight: 4;
+    paddingLeft: 4;
+}
+
+.noPadding {
+    paddingRight: 0;
+    paddingTop: 0;
+    paddingLeft: 0;
+    paddingBottom: 0;    
+}
+
+.styleExplorerTitle {
+    fontFamily: Myriad;
+    fontSize: 12;
+    color: #FFFFFF;
+    fontWeight: normal;
+    align: center;
+}
+
+.footerLink {
+    fontFamily: Verdana;
+    fontSize: 9;
+    fontWeight: normal;
+    color: #FFFFFF;    
+    rollOverColor: #FFFFFF;
+    textRollOverColor: #FFFFFF;
+    selectionColor: #FFFFFF;
+    textSelectionColor: #000000;
+}
+
+.myButtonBarStyleName {
+    fontFamily: Verdana;
+}
+
+.myScrolls { 
+   cornerRadius: 0;
+   borderColor: #ffffff;
+   highlightAlphas: 0.27, 0;
+   fillAlphas: 1, 1, 1, 1;
+   fillColors: #a5b7bf, #a5b7bf, #a5b7bf, #a5b7bf;
+   trackColors: #6d838e, #8b9da6;
+   symbolColor: #ffffff;
+}
+
+.colorPickerPanel {
+   borderThickness: 1;
+   backgroundAlpha: 0;
+   borderAlpha: 0.5;
+   borderThicknessLeft: 0;
+   borderThicknessRight: 0;
+   borderThicknessTop: 0;
+   highlightAlphas: 1, 0.23;
+   borderStyle: solid;
+   headerColors: #ffffff, #ffffff;
+   borderColor: #000000;
+   titleStyleName: "cpHeader";
+}
+
+.cpHeader {
+   color: #000000;
+   fontWeight: bold;
+   }
+
+.myWeekDayStyleName {
+    fontWeight: bold;    
+}
+
+.myHeaderStyleName {
+    fontWeight: bold;    
+}
+
+.myTodayStyleName {
+    fontWeight: bold;
+    color: #FFFFFF;    
+}
+
+@font-face {
+    src: url("../fonts/MyriadWebPro.ttf") ;
+    fontFamily: Myriad;
+    unicodeRange:
+           U+0041-U+005A, /* Upper-Case [A..Z] */
+           U+0061-U+007A, /* Lower-Case a-z */
+           U+0030-U+0039, /* Numbers [0..9] */
+           U+002E-U+002E; /* Period [.] */
+}
+
+@font-face {
+    src: url("../fonts/MyriadWebPro-Bold.ttf") ;
+    fontFamily: Myriad;
+    fontWeight: bold;
+    unicodeRange:
+           U+0041-U+005A; /* Upper-Case [A..Z] */
+}
+.styleExplorerTitleAlliBilli
+{
+	fontFamily: HeartScript;
+    fontSize: 42;
+    color: #FFFFFF;
+    gradientColors: #67afb9, #56508c;
+    fontWeight: normal;
+    align: center;
+}
+
+@font-face {
+    src: url("../fonts/HeartScript.ttf") ;
+    fontFamily: HeartScript;
+    unicodeRange:
+           U+0041-U+005A, /* Upper-Case [A..Z] */
+           U+0061-U+007A, /* Lower-Case a-z */
+           U+0030-U+0039, /* Numbers [0..9] */
+           U+002E-U+002E; /* Period [.] */
+}
+
+Tab{ 
+   showCloseButton: true;
+   fontFamily: Tahoma;
+   cornerRadius: 7;
+      fontSize: 10;
+        borderColor: #ffffff;
+}
+.fullscreenButton{
+	upSkin: Embed(source="assets/undo.png"); 
+	overSkin: Embed(source="assets/undo.png");
+	downSkin: Embed(source="assets/undo.png");
+}
+.play{
+	upSkin: Embed(source="assets/play.png"); 
+	overSkin: Embed(source="assets/play_over.png");
+	downSkin: Embed(source="assets/refresh_down.png");
+}
+.pause{
+	upSkin: Embed(source="assets/pause.png"); 
+	overSkin: Embed(source="assets/pause_over.png");
+	downSkin: Embed(source="assets/refresh_down.png");
+}
+.next{
+	upSkin: Embed(source="assets/next.png"); 
+	overSkin: Embed(source="assets/nextOver.png");
+	downSkin: Embed(source="assets/refresh_down.png");
+}
+.stop{
+	upSkin: Embed(source="assets/stop.png"); 
+	overSkin: Embed(source="assets/stop_over.png");
+	downSkin: Embed(source="assets/refresh_down.png");
+}
+.mute{
+	upSkin: Embed(source="assets/mute.png"); 
+	overSkin: Embed(source="assets/unmute.png");
+	downSkin: Embed(source="assets/mute.png");
+}
+.CloseButton{
+   upSkin: Embed(source="assets/Close.png"); 
+   overSkin: Embed(source="assets/Close_Over.png");
+}
+.RefreshButton{
+	upSkin: Embed(source="assets/refresh.png"); 
+	overSkin: Embed(source="assets/refreshOver.png");
+	downSkin: Embed(source="assets/refresh_down.png");
+}
+TabNavigator {
+   cornerRadius: 0;
+   backgroundColor: #ffffff;
+   selectedTabTextStyleName: "mySelectedTabs";
+}
+.mySelectedTabs {
+   color: #000000;
+   textRollOverColor: #003333;
+   borderColor: #000000;
+}
+Accordion {
+   borderStyle: none;
+   backgroundAlpha: 0;
+   textIndent: 0;
+   highlightAlphas: 0.92, 1;
+   fillAlphas: 0.91, 1, 1, 1;
+   fillColors: #ffffff, #003333, #003300, #006633;
+   selectedFillColors: #ffffff, #003333;
+   themeColor: #2076ac;
+   borderColor: #003333;
+   textRollOverColor: #2b333c;
+   textSelectedColor: #2b333c;
+   dropShadowEnabled: false;
+   shadowDirection: left;
+   headerStyleName: "myaccordionHeader";
+}
+
+.myaccordionHeader {
+   letterSpacing: 0;
+   color: #003333;
+   fontFamily: Tahoma;
+}
+ToolTip {
+   backgroundAlpha: 1;
+   cornerRadius: 6;
+   paddingLeft: 4;
+   paddingRight: 4;
+   backgroundColor: #000000;
+   color: #ffffff;
+   fontWeight: bold;
+}
+
+Panel {
+   headerHeight: 18;
+   backgroundAlpha: 0;
+   dropShadowEnabled: false;
+}
+DataGrid {
+   backgroundAlpha: 0.43;
+   backgroundColor: #ffffff;
+   headerColors: #FFFFFF, #7F804C;
+   letterSpacing: 0;
+   borderThickness: 1;
+   dropShadowEnabled: false;
+   headerStyleName: "mydataGridHeaderStyle";
+   alternatingItemColors: #ffffff, #eff1f2;
+   horizontalGridLines: true;
+   horizontalGridLineColor: #cccccc;
+   verticalGridLineColor: #cccccc;
+   rollOverColor: #333333;
+   textRollOverColor: #ffffff;
+   selectionColor: #000000;
+   textSelectedColor: #ffff00;
+}
+
+.mydataGridHeaderStyle {
+   letterSpacing: 0;
+   textAlign: center;
+}
+Button {
+   cornerRadius: 4;
+   textIndent: 0;
+   paddingTop: 3;
+   paddingBottom: 3;
+   letterSpacing: 0;
+   highlightAlphas: 0.42, 0.27;
+   color: #000033;
+   textRollOverColor: #333333;
+   textSelectedColor: #330000;
+   borderColor: #ffffcc;
+   fontFamily: Verdana;
+   fontSize: 10;
+   fontWeight: bold;
+}
+ComboBox {
+   color: #003366;
+   highlightAlphas: 1, 0.35;
+   fillColors: #ffffff, #999933, #ffffff, #00ccff;
+   backgroundAlpha: 1;
+   selectionColor: #ffcccc;
+   useRollOver: true;
+   rollOverColor: #003366;
+   textRollOverColor: #ffffff;
+   themeColor: #cc33ff;
+   alternatingItemColors: #ffffff, #ffffff;
+   openDuration: 154;
+   closeDuration: 153;
+   fontWeight: normal;
+   letterSpacing: 0;
+   dropDownStyleName: "myComboBoxDropDowns";
+}
+
+.myComboBoxDropDowns {
+   cornerRadius: 2;
+   borderThickness: 3;
+   borderColor: #ffcccc;
+   color: #006699;
+   dropShadowEnabled: true;
+}
+TextInput {
+   borderStyle: solid;
+   borderColor: #ffffff;
+   borderThickness: 3;
+   cornerRadius: 0;
+   backgroundAlpha: 0.79;
+   backgroundColor: #ffffff;
+   color: #330000;
+   paddingLeft: 4;
+   paddingRight: 2;
+   dropShadowEnabled: false;
+}
+TextArea {
+   borderStyle: solid;
+   borderColor: #ffffff;
+   borderThickness: 3;
+   paddingLeft: 4;
+   paddingRight: 4;
+   leading: 4;
+   textIndent: 4;
+   letterSpacing: 0;
+   backgroundAlpha: 0.79;
+   backgroundColor: #ffffff;
+   color: #330000;
+   cornerRadius: 4;
+}
+RadioButton {
+   textIndent: 0;
+   fillColors: #006666, #ffffcc, #00ffcc, #ffffff;
+   borderColor: #99ff66;
+   color: #333333;
+   textSelectedColor: #ffffff;
+   textRollOverColor: #ffffff;
+}
+.jokeDaayTextArea {
+   fontFamily: Arial;
+   fontSize: 12;
+   color: #ffffff;
+   textAlign: center;
+   backgroundAlpha: 0;
+   borderStyle: solid;
+   borderColor: #b7babc;
+   borderThickness: 0;
+   cornerRadius: 7;
+   dropShadowEnabled: false;
+}

@@ -1,0 +1,157 @@
+<mx:VBox 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:PagingDataGrid="views.PagingDataGrid.*"
+	width="95%" height="98%"
+	 verticalScrollBarStyleName="fseVerticalScrollBar" 
+	horizontalAlign="center"
+	label="Sugesstion Forum" 
+	horizontalScrollPolicy="auto" 
+	verticalScrollPolicy="auto" 
+	creationComplete="loadForumGrid()">
+
+<mx:Script>
+	<![CDATA[
+		import mx.events.ListEvent;
+		import mx.controls.Alert;
+		import mx.rpc.events.FaultEvent;
+		import mx.utils.ArrayUtil;
+		import mx.rpc.xml.SimpleXMLDecoder;
+		import mx.rpc.events.ResultEvent;
+		import mx.collections.ArrayCollection;
+
+        [Bindable] private var myCollection:ArrayCollection = new ArrayCollection();
+		private function resultListener(event:ResultEvent):void {
+			myGrid.enabled = true;
+			if(event!=null && event.result!=null)
+			{
+				var xml:XML =  XML(event.result);
+				if(xml!=null)
+				{
+					var xmlDoc:XMLDocument = new XMLDocument(xml);
+					var decoder:SimpleXMLDecoder = new SimpleXMLDecoder();
+					var data:Object = decoder.decodeXML(xmlDoc);
+					if(data!=null && data.persons!=null && data.persons.person!=null){
+					myCollection = new ArrayCollection(ArrayUtil.toArray(data.persons.person));
+					}
+				}
+			}
+		}	
+		
+		private function faultListener(event:FaultEvent):void {
+			Alert.show(event.fault.message, "Error");
+		}	
+		
+		private function keyPressEvent(event:KeyboardEvent):void {
+				if(event.keyCode == 40 || event.keyCode==38)
+				{
+					updateLblValues();
+				}
+			}	
+			
+			private function updateLblValues():void {
+					postedBy.text = "Posted By : " + myGrid.selectedItem.name;
+					postedDateLbl.text = "Posted Date : " + myGrid.selectedItem.placedDate;
+					descLbl.text = myGrid.selectedItem.opinion;
+			}
+			private function itemClickEvent(event:ListEvent):void {
+				updateLblValues();
+			}
+			private function loadForumGrid():void {
+				forumServiceGetDS.send();
+			}
+			
+			public function handleMyFormSubmitEvent(): void
+			{
+				var qryString:String="?name=";
+				qryString+=myName.text;
+				qryString+="&content="+content.text;
+				forumServiceFormSubmitDS.url = forumServiceFormSubmitDS.url+qryString;
+				forumServiceFormSubmitDS.send();
+			}
+			private function onCompleteForumSaveServiceDS(event:ResultEvent):void {
+				Alert.show("Please Close and Open your browser to see your sugessition.");
+			}
+
+			
+	]]>
+</mx:Script>
+    
+<!--<mx:HTTPService method="GET" resultFormat="e4x" useProxy="false" id="forumServiceGetDS" 
+	url="http://localhost:8080/AlliBilliServices/forumLoadService.jsp" 
+	result="resultListener(event)"
+	fault="faultListener(event)"
+	showBusyCursor="true"/>		
+<mx:HTTPService method="GET" useProxy="false" id="forumServiceFormSubmitDS" 
+	url="http://localhost:8080/AlliBilliServices/forumSaveService.jsp" 
+	result="onCompleteForumSaveServiceDS(event)"  
+	fault="faultListener(event)" 
+	showBusyCursor="true"/> -->
+<mx:HTTPService method="GET" resultFormat="e4x" useProxy="false" id="forumServiceGetDS" 
+	url="http://services.allibilli.com/forumLoadService.jsp" 
+	result="resultListener(event)"
+	fault="faultListener(event)"
+	showBusyCursor="true"/>		
+<mx:HTTPService method="GET" useProxy="false" id="forumServiceFormSubmitDS" 
+	url="http://services.allibilli.com/forumSaveService.jsp" 
+	result="onCompleteForumSaveServiceDS(event)"  
+	fault="faultListener(event)" 
+	showBusyCursor="true"/>
+
+	<mx:Panel id="feedBackDataGridFormBox" title="Why don't you Support us, Sending your opinin." layout="vertical" horizontalAlign="center"
+    color="0xffffff" borderAlpha="0.15" width="100%" paddingTop="10" paddingRight="5" paddingBottom="10" paddingLeft="5"
+    verticalScrollPolicy="off"  verticalGap="10">
+
+        <mx:Form width="95%" color="0x323232" paddingTop="5" id="myFormData">
+
+		   	<mx:FormItem width="30%" label="Name">
+                <mx:TextInput id="myName" width="100%" />
+            </mx:FormItem>
+            <mx:FormItem width="100%" label="Opinion">
+                <mx:TextArea id="content" width="100%" />
+            </mx:FormItem>
+            <mx:HBox horizontalAlign="right" verticalAlign="bottom"  width="100%">
+	            <mx:FormItem  horizontalAlign="right">
+	                <mx:Button id="Submit" label="Submit" click="handleMyFormSubmitEvent()"/>
+	            </mx:FormItem>
+	           	<mx:FormItem  horizontalAlign="right">
+	                <mx:Button id="Reload" label="Reload Content" />
+	            </mx:FormItem>
+            </mx:HBox>
+        </mx:Form>
+        
+    </mx:Panel>
+				    	
+	<mx:Box width="100%" height="100%" paddingLeft="10" paddingRight="10" horizontalAlign="center" styleName="styleControlTabNavigator" >
+		
+		<PagingDataGrid:Paging  id="myPaging" dataGrid="{myGrid}" />
+		<PagingDataGrid:MyDataGrid 
+			id="myGrid" dataProvider="{myCollection}" width="95%" color="#000000" paddingRight="5" paddingLeft="5"
+			 itemClick="itemClickEvent(event);" keyDown="keyPressEvent(event);">
+			<PagingDataGrid:columns>
+			
+				<mx:DataGridColumn headerText="Posted Date" dataField="placedDate" width="90"/>
+				<mx:DataGridColumn headerText="Posted By" dataField="name" width="150"/>
+				<mx:DataGridColumn headerText="Description" dataField="opinion"/>
+				
+			</PagingDataGrid:columns>	
+		</PagingDataGrid:MyDataGrid>
+		
+	</mx:Box>
+	<mx:Box width="100%" height="30%" paddingLeft="10" paddingRight="10" styleName="styleControlTabNavigator" horizontalAlign="left">
+		
+		<mx:HBox width="100%" horizontalAlign="left" height="100%">
+			<mx:Label id="postedBy" text="Posted By : " paddingLeft="5" paddingRight="5"/>
+			<mx:Label id="postedDateLbl" text="Posted Date : " paddingRight="5" />
+		</mx:HBox>
+		
+		<mx:VBox width="100%" height="100%">
+			<mx:Form width="100%">
+				<mx:FormItem label="Opinion" height="100%" width="100%">
+					<mx:TextArea id="descLbl" width="98%" editable="false"/>
+				</mx:FormItem>
+			</mx:Form>
+		</mx:VBox>
+		
+	</mx:Box>			    	
+
+</mx:VBox>

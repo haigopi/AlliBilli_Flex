@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:head="layout.*"
+	xmlns:PagingDataGrid="views.PagingDataGrid.*"
+	creationComplete="afterAllCompsLoaded()"
+	>
+<mx:Script>
+	<![CDATA[
+	
+		import mx.events.ListEvent;
+		import com.MyCustomEvent;
+		import mx.controls.Alert;
+		import mx.utils.ArrayUtil;
+		import mx.rpc.xml.SimpleXMLDecoder;
+		import mx.rpc.events.FaultEvent;
+		import mx.rpc.events.ResultEvent;
+		import com.MyRoomMateEvent;
+		import mx.collections.ArrayCollection;
+			
+		[Bindable] [Embed(source='assets/flags/UnitedStatesofAmerica.png')]	private var USAFLAG:Class;
+     	[Bindable] [Embed(source='assets/flags/UnitedKingdom.png')]	private var UKFLAG:Class;
+     	[Bindable] [Embed(source='assets/flags/Australia.png')] private var AUSTRALIAFLAG:Class;
+     	[Bindable] [Embed(source='assets/flags/India.png')] private var INDIAFLAG:Class;
+     	[Bindable] [Embed(source='assets/flags/Earth.png')] private var Earth:Class;
+     	[Bindable] [Embed(source='assets/reload.png')]	private var Reload:Class;
+     	[Bindable] private var filterValue:String="USA";
+     	
+     	private function startMyGridFilter(item:Object):Boolean
+     	{
+     		if(filterValue == "ALLCOUNTRIES")
+     		{
+     			return ((item.country!="USA")&&(item.country!="UK")&&(item.country!="INDIA")&&(item.country!="AUSTRALIA"));
+     		}
+     		else{
+     			trace("-->"+filterValue);
+     			return item.country==filterValue;
+     		} 
+     	}
+     	
+     	private function afterAllCompsLoaded():void
+     	{
+     		myGrid.enabled = false;
+     		myDataGridLoadService.send();
+     	}
+     	
+     	private function hadleCountryButtonClick(event:Event):void
+     	{
+     		var localFilter:String = (Button(event.currentTarget).id).toString();
+     		filterValue = localFilter;
+     		myCollection.filterFunction = startMyGridFilter;
+     		myCollection.refresh();
+     	}
+     	
+     	[Bindable]
+		private var myCollection:ArrayCollection = new ArrayCollection();
+			
+			//result listener for HTTPService 
+			private function resultListener(event:ResultEvent):void {
+				myGrid.enabled = true;
+				var xml:XML =  XML(event.result);
+				var xmlDoc:XMLDocument = new XMLDocument(xml);
+				var decoder:SimpleXMLDecoder = new SimpleXMLDecoder();
+				var data:Object = decoder.decodeXML(xmlDoc);
+				if(data!=null && data.persons!=null && data.persons.person!=null){
+				myCollection = new ArrayCollection(ArrayUtil.toArray(data.persons.person));
+				}
+			}	
+			
+			//fault listener for HTTPService
+			private function faultListener(event:FaultEvent):void {
+				Alert.show(event.fault.message, "Error");
+			}	
+			private function keyPressEvent(event:KeyboardEvent):void {
+				if(event.keyCode == 40 || event.keyCode==38)
+				{
+					updateLblValues();
+				}
+			}	
+			
+			private function updateLblValues():void {
+					conatactEmailLbl.text = "Contact Email : " + myGrid.selectedItem.contactEmail;
+					postedBy.text = "Posted By : " + myGrid.selectedItem.name;
+					//postedDateLbl.text = "Posted Date : " + myGrid.selectedItem.placedDate;
+					regionLbl.text = "Country : " + myGrid.selectedItem.country;
+					contactNumberLbl.text = "Contact Number : " + myGrid.selectedItem.contactNumber;
+					genderLbl.text = "Gender : " + myGrid.selectedItem.gender;
+					adTitleLbl.text = myGrid.selectedItem.adTitle;
+					descLbl.text = myGrid.selectedItem.description;
+					cityLbl.text = "City : "+myGrid.selectedItem.city;
+					stateLbl.text = "State : "+myGrid.selectedItem.state;	
+			}
+			private function itemClickEvent(event:ListEvent):void {
+				updateLblValues();
+			}	
+			
+	]]>
+</mx:Script>
+
+<!--<mx:HTTPService id="myDataGridLoadService" url="http://localhost:8080/AlliBilliServices/loadMyAdService.jsp"
+		resultFormat="e4x" result="resultListener(event)" fault="faultListener(event)"/>-->
+
+
+<mx:HTTPService id="myDataGridLoadService" url="http://services.allibilli.com/myAdsLoadService.jsp"
+		resultFormat="e4x" result="resultListener(event)" fault="faultListener(event)"/>
+	
+<mx:Zoom id="shrink" duration="100" zoomHeightTo=".9" zoomWidthTo=".9" />
+<mx:Zoom id="revert" duration="50" zoomHeightTo="1" zoomWidthTo="1" />
+
+<mx:Panel width="100%" height="100%" styleName="glassPods" horizontalScrollPolicy="auto" verticalScrollPolicy="auto" label="Ad Listing Grid">
+<!--<head:GlassHeaders headerTitle="AD LISTING GRID"/>-->
+	<mx:HBox width="100%" styleName="styleControlTabNavigator" label="Rules and Regulars" horizontalAlign="center"  paddingTop="10" paddingLeft="10" paddingRight="10" paddingBottom="10">
+		
+		<mx:Button id="USA" label="USA Ads" click="hadleCountryButtonClick(event)" mouseDownEffect="{shrink}" mouseUpEffect="{revert}" icon="{USAFLAG}" >
+		</mx:Button>
+		
+		<mx:Button id="UK" label="UK Ads" click="hadleCountryButtonClick(event)" mouseDownEffect="{shrink}" mouseUpEffect="{revert}" icon="{UKFLAG}" >
+		</mx:Button>
+	
+		<mx:Button id="INDIA" label="INDIA Ads" click="hadleCountryButtonClick(event)" mouseDownEffect="{shrink}" mouseUpEffect="{revert}" icon="{INDIAFLAG}" >
+		</mx:Button>
+		
+		<mx:Button id="AUSTRALIA" label="AUSTRALIA Ads" click="hadleCountryButtonClick(event)" mouseDownEffect="{shrink}" mouseUpEffect="{revert}" icon="{AUSTRALIAFLAG}" >
+		</mx:Button>
+		
+		<mx:Button id="ALLCOUNTRIES" label="Remaining Ads" click="hadleCountryButtonClick(event)" mouseDownEffect="{shrink}" mouseUpEffect="{revert}" icon="{Earth}" >
+		</mx:Button>
+		
+		<mx:Button id="reload" label="Reload Ads" click="afterAllCompsLoaded()" mouseDownEffect="{shrink}" mouseUpEffect="{revert}" icon="{Reload}" >
+		</mx:Button>
+	</mx:HBox>
+	
+	<mx:Box width="100%" height="100%" paddingLeft="10" paddingRight="10" horizontalAlign="center" styleName="styleControlTabNavigator" >
+		
+		<PagingDataGrid:Paging  id="myPaging" dataGrid="{myGrid}" />
+		<PagingDataGrid:MyDataGrid 
+			id="myGrid" dataProvider="{myCollection}" width="95%" color="#000000" paddingRight="5" paddingLeft="5"
+			 itemClick="itemClickEvent(event);" keyDown="keyPressEvent(event);">
+			<PagingDataGrid:columns>
+			
+				<mx:DataGridColumn headerText="Posted Date" dataField="placedDate" width="80"/>
+				<mx:DataGridColumn headerText="Posted By" dataField="name" width="50" visible="false"/>
+				<mx:DataGridColumn headerText="City" dataField="city" width="50"/>
+				<mx:DataGridColumn headerText="State" dataField="state" width="50"/>
+				<mx:DataGridColumn headerText="Region" dataField="country" width="50"/>
+				<mx:DataGridColumn headerText="ContactNumber" dataField="contactNumber" visible="false"/>
+				<mx:DataGridColumn headerText="ContactEmail" dataField="contactEmail" visible="false"/> 
+				<mx:DataGridColumn headerText="AdTitle" dataField="adTitle" width="200"/>
+				<mx:DataGridColumn headerText="Gender" dataField="gender" width="50"/>
+				<mx:DataGridColumn headerText="Description" dataField="description"/>
+				
+			</PagingDataGrid:columns>	
+		</PagingDataGrid:MyDataGrid>
+		
+	</mx:Box>
+	<mx:Box width="100%" height="30%" paddingLeft="10" paddingRight="10" styleName="styleControlTabNavigator" horizontalAlign="left">
+		
+		<mx:HBox width="95%" horizontalAlign="left" height="100%">
+			<mx:Label id="postedBy" text="Posted By : " paddingLeft="5" paddingRight="5"/>
+			<mx:Label id="genderLbl" text="Gender : " paddingLeft="5" paddingRight="5"/>
+			<mx:Label id="regionLbl" text="Region : " paddingLeft="5" paddingRight="5"/>
+			<mx:Label id="contactNumberLbl" text="ContactNumber : " paddingLeft="5" paddingRight="5"/>
+			<mx:Label id="conatactEmailLbl" text="Contact Email : " paddingLeft="5" paddingRight="5"/>
+			<mx:Label id="cityLbl" text="City : " paddingLeft="5" paddingRight="5"/>
+			<mx:Label id="stateLbl" text="Sate : " paddingLeft="5" paddingRight="5"/>
+			<!--<mx:Label id="postedDateLbl" text="Posted Date : " paddingRight="5" visible="false" />-->
+		</mx:HBox>
+		
+		<mx:VBox width="95%" height="100%">
+			<mx:Form width="100%">
+				<mx:FormItem label="Ad Title" width="95%">
+					<mx:TextInput id="adTitleLbl" width="95%" editable="false"/>	
+				</mx:FormItem>
+				<mx:FormItem label="Ad Description" height="100%" width="95%">
+					<mx:TextArea id="descLbl"  width="95%" editable="false"/>
+				</mx:FormItem>
+			</mx:Form>
+		</mx:VBox>
+		
+	</mx:Box>
+	
+	</mx:Panel>
+
+</mx:Canvas>
