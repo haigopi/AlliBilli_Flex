@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<treeRoots>
+       <treeRoot name="Hello Kids" label="Hello Kids">
+	      <treeRoot name="Telugu Rhymes" label="Telugu Rhymes" url="http://www.allibilli.com/kids/teluguKids.html"></treeRoot>
+		  <treeRoot name="Tamil Rhymes" label="Tamil Rhymes" url="http://www.allibilli.com/kids/tamilKids.html"></treeRoot>
+		  <treeRoot name="Kannada Rhymes" label="Kannada Rhymes" url="http://www.allibilli.com/kids/kannadaKids.html"></treeRoot>
+		  <treeRoot name="Bengali Rhymes" label="Bengali Rhymes" url="http://www.allibilli.com/kids/bengaliKids.html"></treeRoot>
+		  <treeRoot name="English Rhymes" label="English Rhymes" url="http://www.allibilli.com/kids/englishKids.html"></treeRoot>
+		  <treeRoot name="Malayalam Rhymes" label="Malayalam Rhymes" url="http://www.allibilli.com/kids/malayalamKids.html"></treeRoot>
+		 		
+	   </treeRoot>
+
+
+	   <treeRoot name="Comedy Special" label="Comedy Special">
+			<treeRoot name="Charles Chaplin" label="sir Charles Chaplin" url="http://www.allibilli.com/kids/charlesChaplin.html"></treeRoot>
+		</treeRoot>
+
+
+	</treeRoots>

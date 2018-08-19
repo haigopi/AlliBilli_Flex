@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<treeRoots>
+			<treeRoot name="CollegesCampus" label="Colleges and Campus">
+				<treeRoot name="ArtisticRelaxation" label="ArtisticRelaxation" url="http://www.bing.com">			</treeRoot>
+			</treeRoot>
+			<treeRoot name="TeachingStyle" label="Teaching Style">
+				<treeRoot name="ArtisticRelaxation" label="ArtisticRelaxation" url="http://www.bing.com">			</treeRoot>
+			</treeRoot>
+			<treeRoot name="CourseStructure" label="Course Structure">
+				<treeRoot name="ArtisticRelaxation" label="ArtisticRelaxation" url="http://www.bing.com">			</treeRoot>
+			</treeRoot>
+			<treeRoot name="Laboratory" label="Laboratory">
+				<treeRoot name="ArtisticRelaxation" label="ArtisticRelaxation" url="http://www.bing.com">			</treeRoot>
+			</treeRoot>
+			<treeRoot name="USA Universities" label="USA Universities">
+				<treeRoot name="usuniversities" label="USA Universities" url="http://www.usuniversities.com/search.cfm">			</treeRoot>
+			</treeRoot>
+			<treeRoot name="InternationalEducation" label="International Education">
+				<treeRoot name="InternationalEducation" label="InternationalEducation" url="http://www.happyschoolsblog.com/welcome/?awt_m=7emGBlAjIa&awt_email=cherukuru1%40yahoo.com">			</treeRoot>
+			</treeRoot>
+	</treeRoots>

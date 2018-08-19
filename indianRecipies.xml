@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<treeRoots>
+			<treeRoot name="AndhraRecipies" label="Andhra Recipies">
+				<treeRoot name="SailusKitchen" label="Sailus Kitchen" url="http://www.sailusfood.com/categories/all_recipes_blogged_to_date/"> </treeRoot>
+				<treeRoot name="Mahanandi Foods" label="Mahanandi Foods" url="http://www.nandyala.org/mahanandi/">				</treeRoot>
+				<treeRoot name="aayisrecipes" label="Aayis Recipes" url="http://www.aayisrecipes.com/">					</treeRoot>				
+				<treeRoot name="MommysCuisine" label="Mommys Cuisine" url="http://www.mommyscuisine.com/">				</treeRoot>
+				<treeRoot name="MyDhaba" label="MyDhaba " url="http://mydhaba.blogspot.com/">				</treeRoot>
+				<treeRoot name="SanjeevKapoor" label="SanjeevKapoor" url="http://www.sanjeevkapoor.com/">				</treeRoot>
+				<treeRoot name="SimpleIndianFood" label="SimpleIndianFood" url="http://simpleindianfood.blogspot.com/">				</treeRoot>
+				<treeRoot name="cooking4allseasons" label="Cooking4AllSeasons" url="http://cooking4allseasons.blogspot.com/">				</treeRoot>
+			</treeRoot>
+</treeRoots>

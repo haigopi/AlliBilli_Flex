@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<treeRoots>
+			<treeRoot name="Devotional" label="Devotional" expandable="true">
+				<treeRoot name="ArtisticRelaxation" label="ArtisticRelaxation" url="http://www.allibilli.com/devotional/nadaswaramAndDrums.html"></treeRoot>
+				<treeRoot name="Early Morning" label="Early Morning" url="http://www.allibilli.com/devotional/devotional.html"></treeRoot>
+			
+			</treeRoot>
+			
+			<treeRoot name="OurSpace" label="Our Space - Educate ourself">
+			      <treeRoot name="Moon" label="Beauty of Moon" url="http://www.allibilli.com/space/moon/moon.htm"></treeRoot>
+			
+			
+			</treeRoot>
+			
+			<treeRoot name="EntertainmentWorld" label="EntertainmentWorld" >
+			   <treeRoot name="EntertainementWorld" label="Entertainement" url="http://www.allibilli.com/entertainmentWorld.html"></treeRoot>
+			    <treeRoot name="ProudIndian" label="ProudIndian" url="http://www.allibilli.com/proudtobeanindian.html"></treeRoot>
+			    <treeRoot name="Vandaematram" label="Vandaematram" url="http://www.youtube.com/watch?v=BJ399KOoNRA"></treeRoot>
+			   <treeRoot name="Meebo" label="Meebo - Messengers" url="http://www.meebo.com"></treeRoot>
+			   <treeRoot name="GizmoSMS" label="Send SMS - WorldWide" url="http://gizmosms.com/m"></treeRoot>
+			</treeRoot>
+			
+			<treeRoot name="Itsforyou" label="Its for you" expandable="true">
+
+    <treeRoot name="Telugu" label="Telugu">
+					
+				<treeRoot name="Eenadu" label="Eenadu" url="http://www.eenadu.net" icon="Eenadu"></treeRoot>
+	          <treeRoot name="Vaartha" label="Vaartha" url="http://www.vaarttha.com/index.asp"></treeRoot>
+	          <treeRoot name="AndhraJyothi" label="AndhraJyothi" url="http://www.andhrajyothy.com"></treeRoot>
+	          <treeRoot name="Saakshi" label="Saakshi" url="http://www.sakshi.com"></treeRoot>
+	          <treeRoot name="AndhraBhoomi" label="AndhraBhoomi" url="http://www.andhrabhoomi.net"></treeRoot>
+	         <treeRoot name="Prajasakti" label="Prajasakti" url="http://www.prajasakti.com"></treeRoot>
+	         <treeRoot name="Surya" label="Surya" url="http://www.suryaa.com/default.asp"></treeRoot>
+	         <treeRoot name="ApWeekly" label="ApWeekly" url="http://apweekly.com"></treeRoot>
+	         <treeRoot name="Andhravilas" label="Andhravilas" url="http://andhravilas.com/telugu.asp"></treeRoot>
+	         <treeRoot name="TeluguOne" label="TeluguOne" url="http://teluguone.com/news"></treeRoot>
+	         <treeRoot name="TeluguPeople" label="TeluguPeople" url="http://www.telugupeople.com"></treeRoot>
+	         <treeRoot name="ThatsTelugu" label="ThatsTelugu" url="http://thatstelugu.oneindia.in"></treeRoot>
+	         <treeRoot name="EenaduAmerica" label="EenaduAmerica" url="http://www.telugu.eenaduandhra.com"></treeRoot>
+	         <treeRoot name="Mayanagar" label="Mayanagar" url="http://www.mayanagar.com"></treeRoot>
+	         <treeRoot name="GreatAndhra" label="GreatAndhra" url="http://www.greatandhra.com/index.php"></treeRoot>
+	         <treeRoot name="IdleBrain" label="IdleBrain" url="http://www.idlebrain.com"></treeRoot>
+	         <treeRoot name="ETV" label="ETV" url="http://www.etv.co.in/e-tv-5/index.php"></treeRoot>
+	         <treeRoot name="NTV" label="NTV" url="http://www.ntvtelugu.com"></treeRoot>
+	         <treeRoot name="CTV" label="CTV" url="http://www.ctv.in"></treeRoot>
+	         <treeRoot name="TV9" label="TV9" url="http://tv9.net/Tv9-andhrapradesh/home_tel.htm"></treeRoot>
+	         <treeRoot name="SNTV" label="SNTV" url="http://www.snehatv.net"></treeRoot>
+	         <treeRoot name="TV5" label="TV5" url="http://www.tv5news.in"></treeRoot>
+	         <treeRoot name="SakshiTV" label="SakshiTV" url="http://tv.sakshi.com"></treeRoot>
+	         <treeRoot name="Saradaga" label="Saradaga" url="http://www.saradaga2.com"></treeRoot>
+	         <treeRoot name="OldLovelyMusic" label="OldLovelyMusic" url="http://www.chimatamusic.com"></treeRoot>
+	         <treeRoot name="Morning Star" label="Morning Star" url="http://arundathy.blogspot.com"></treeRoot>
+	 </treeRoot>
+
+	<treeRoot name="Tamil" label="Tamil">
+				<treeRoot name="Dinamalar" label="Dinamalar" url="http://www.dinamalar.com"></treeRoot>
+				<treeRoot name="Dinakaran" label="Dinakaran" url="http://www.dinakaran.com"></treeRoot>
+				<treeRoot name="DailyThanthi" label="DailyThanthi" url="http://www.dailythanthi.com"></treeRoot>
+				<treeRoot name="Vikatan" label="Vikatan" url="http://www.vikatan.com/vc/2008/nov/vc.asp"></treeRoot>
+				<treeRoot name="BehindWoods" label="BehindWoods" url="http://www.behindwoods.com"></treeRoot>
+				<treeRoot name="TamilPeek" label="TamilPeek" url="http://www.tamilpeek.com"></treeRoot>
+				<treeRoot name="Uyirvani" label="Uyirvani" url="http://www.uyirvani.com/forums"></treeRoot>
+				<treeRoot name="ChennaiOnline" label="ChennaiOnline" url="http://www.chennaionline.com"></treeRoot>
+				<treeRoot name="Kumudam" label="Kumudam" url="http://www.kumudam.com"></treeRoot>
+				<treeRoot name="AhaTamil" label="AhaTamil" url="http://ahatamil.com"></treeRoot>
+				<treeRoot name="Adhikaalai" label="Adhikaalai" url="http://www.adhikaalai.com"></treeRoot>
+     </treeRoot>
+	<treeRoot name="Kannada" label="Kannada">
+
+                <treeRoot name="KannadaPrabha" label="KannadaPrabha" url="http://www.kannadaprabha.com"></treeRoot>
+				<treeRoot name="DeccanHerald" label="DeccanHerald" url="http://www.deccanherald.com/Content/Jan62009/update.asp"></treeRoot>
+				<treeRoot name="Prajavani" label="Prajavani" url="http://www.prajavani.net/Content/Jan62009/update.asp"></treeRoot>
+				<treeRoot name="Sirigandha" label="Sirigandha" url="http://www.sirigandha.com/search/label/online_movie"></treeRoot>
+				<treeRoot name="Sanjeevini" label="Sanjeevini" url="http://www.sanjevani.com"></treeRoot>
+				
+     </treeRoot>
+
+	<treeRoot name="Malayalam" label="Malayalam">
+				 <treeRoot name="NewKerala" label="NewKerala" url="http://www.newkerala.com"></treeRoot>
+				<treeRoot name="Olangal" label="Olangal" url="http://olangal.com"></treeRoot>
+				<treeRoot name="Deepika" label="Deepika" url="http://www.deepika.com"></treeRoot>
+				<treeRoot name="Mathrubhumi" label="Mathrubhumi" url="http://www.mathrubhumi.com"></treeRoot>
+				<treeRoot name="Deshabhimani" label="Deshabhimani" url="http://www.deshabhimani.com/index.aspx"></treeRoot>
+				<treeRoot name="Manorama" label="Manorama" url="http://www.manoramaonline.com"></treeRoot>
+				<treeRoot name="Videoduniya" label="Videoduniya" url="http://www.videoduniya.com"></treeRoot>
+	</treeRoot>
+	<treeRoot name="Punjabi" label="Punjabi">
+				 <treeRoot name="Ajit" label="Ajit" url="http://www.ajitjalandhar.com/redirect.php"></treeRoot>
+				<treeRoot name="ApnaView" label="ApnaView" url="http://www.apnaview.com"></treeRoot>
+				<treeRoot name="LivePunjab" label="LivePunjab" url= "http://www.livepunjab.com"></treeRoot>
+					
+    </treeRoot>
+	<treeRoot name="Gujarati" label="Gujarati">
+				 <treeRoot name="Samachar" label="Samachar" url="http://www.gujaratsamachar.com"></treeRoot>
+				<treeRoot name="Sandesh" label="Sandesh" url= "http://www.sandesh.com"></treeRoot>
+				<treeRoot name="Sambhaav" label="Sambhaav" url="http://www.sambhaav.com"></treeRoot>
+				<treeRoot name="JaiHind" label="JaiHind" url="http://www.jaihinddaily.com/mainpage.asp"></treeRoot>
+				<treeRoot name="GujaratiNet" label="GujaratiNet" url="http://www.gurjari.net"></treeRoot>
+				<treeRoot name="Chitralekha" label="Chitralekha" url="http://www.chitralekha.com"></treeRoot>
+				<treeRoot name="AkilIndia" label="AkilIndia" url="http://www.akilaindia.com/daily/index.html"></treeRoot>
+				<treeRoot name="DiyaBhaskar" label="DiyaBhaskar" url="http://epaper.divyabhaskar.co.in"></treeRoot>
+				<treeRoot name="Pustakalay" label="Pustakalay" url="http://pustakalay.com/movies.html"></treeRoot>
+								
+	</treeRoot>
+	<treeRoot name="Marathi" label="Marathi">
+				 <treeRoot name= "Dainikaikya" label="Dainikaikya" url="http://www.dainikaikya.com/index.htm"></treeRoot>
+				<treeRoot name="DeshDoot" label="DeshDoot" url="http://deshdoot.com"></treeRoot>
+				<treeRoot name="Pudhari" label="Pudhari" url="http://epaper.pudhari.com/epapermain.aspx"></treeRoot>
+				<treeRoot name="Saamna" label="Saamna" url="http://www.saamna.com/"></treeRoot>
+				<treeRoot name="TarunBharat" label="TarunBharat" url="http://www.tarunbharat.com"></treeRoot>
+				<treeRoot name="Loksatta" label="Loksatta" url="http://www.loksatta.com"></treeRoot>
+				
+	</treeRoot>
+	<treeRoot name="Oriya" label="Oriya">
+				 <treeRoot name="Dharitri" label="Dharitri" url="http://www.dharitri.com"></treeRoot>
+				<treeRoot name="OrisaSambad" label="OrisaSambad" url="http://www.orissasambad.com"></treeRoot>
+				<treeRoot name="TheSamaja" label="TheSamaja" url="http://www.thesamaja.com/home.php"></treeRoot>
+				<treeRoot name="Pragativadi" label="Pragativadi" url="http://www.pragativadi.com"></treeRoot>
+								
+	</treeRoot>
+	<treeRoot name="Bengali" label="Bengali">
+				 <treeRoot name="Pratidin"  label="Pratidin" url="http://www.sangbadpratidin.in/index.php"></treeRoot>
+				<treeRoot name="BBC-Bengali" label="BBC-Bengali" url="http://www.bbc.co.uk/bengali"></treeRoot>
+								
+	</treeRoot>
+	<treeRoot name="Hindi" label="Hindi">
+				 <treeRoot name="WebDunia" label="WebDunia" url="http://msn.webdunia.com/hindi/index.htm"></treeRoot>
+				<treeRoot name="Baskar" label="Baskar" url="http://www.bhaskar.com"></treeRoot>
+				<treeRoot name="Jagran" label="Jagran" url="http://in.jagran.yahoo.com"></treeRoot>
+				<treeRoot name="NavaBharatTimes" label="NavaBharatTimes" url="http://navbharattimes.indiatimes.com"></treeRoot>
+				<treeRoot name="IndiaFM" label="IndiaFM" url="http://www.bollywoodhungama.com"></treeRoot>
+				<treeRoot name="NowRunning" label="NowRunning" url="http://www.nowrunning.com"></treeRoot>
+				<treeRoot name="BBC-Hindi" label="BBC-Hindi" url="http://www.bbc.co.uk/hindi"></treeRoot>
+
+
+				
+	</treeRoot>
+	<treeRoot name="English-GreatIndia" label="English-GreatIndia"> 
+				<treeRoot name="HindustanTimes" label="HindustanTimes" url="http://www.hindustantimes.com/Homepage/Homepage.aspx"></treeRoot>
+				<treeRoot name="TimesofIndia" label="TimesofIndia" url="http://timesofindia.indiatimes.com"></treeRoot>
+				<treeRoot name="ExpressIndia" label="ExpressIndia" url="http://www.expressindia.com/"></treeRoot>
+				<treeRoot name="HINDU" label="HINDU" url="http://www.hinduonline.com"></treeRoot>
+				<treeRoot name="DeccanChronicle" label="DeccanChronicle" url="http://www.deccanchronicle.com/"></treeRoot>
+				<treeRoot name="EconomicTimes" label="EconomicTimes" url="http://economictimes.indiatimes.com"></treeRoot>
+				<treeRoot name="BusinessStandard" label="BusinessStandard" url="http://www.business-standard.com/india"></treeRoot>
+				<treeRoot name="DeccanHerald" label="DeccanHerald" url="http://www.deccanherald.com/Content/Jan62009/update.asp"></treeRoot>
+				<treeRoot name="IBN-Live" label="IBN-Live" url="http://ibnlive.in.com"></treeRoot>
+				
+	</treeRoot>
+	<treeRoot name="Sports &amp; WorldTV" label="Sports &amp; WorldTV">
+				 <treeRoot name="CricInfo" label="CricInfo" url="http://www.cricinfo.com"></treeRoot>
+				<treeRoot name="Crick7" label="Crick7" url="http://www.cric7.com"></treeRoot>
+				<treeRoot name="TVU" label="TVU" url="http://www.tvunetworks.com/watchTV/index.html"></treeRoot>
+								
+	</treeRoot>
+			</treeRoot>
+		</treeRoots>

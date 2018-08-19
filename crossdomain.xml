@@ -1,0 +1,9 @@
+<?xml version="1.0"?><!DOCTYPE cross-domain-policySYSTEM "http://www.macromedia.com/xml/dtds/cross-domain-policy.dtd">
+<cross-domain-policy>
+<allow-access-from domain="*.allibilli.info"/>
+<allow-access-from domain="*.allibilli.com"/>
+<allow-access-from domain="services.allibilli.com"/>
+<allow-access-from domain="http://services.allibilli.com"/>
+<allow-access-from domain="http://am1.activemeter.com"/>
+<allow-access-from domain="*.activemeter.com"/>
+</cross-domain-policy>

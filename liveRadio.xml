@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<treeRoots>
+			
+	<treeRoot name="OldLovelyMusic" label="OldLovelyTeluguMusic" url="http://www.chimatamusic.com"></treeRoot>
+	<treeRoot name="TeluguRadio" label="Telugu Radios" url="http://www.livedesitube.com/live-telugu-radio-station.aspx">			</treeRoot>
+	<treeRoot name="PanjabiRadios" label="Panjabi Radios" url="http://www.livedesitube.com/online_punjabi_radio.aspx">			</treeRoot>
+	<treeRoot name="MalayalamRadios" label="Malayalam Radios" url="http://www.livedesitube.com/live-malayalam-radio-station.aspx">			</treeRoot>
+	<treeRoot name="HindiRadios" label="Hindi Radios" url="http://www.livedesitube.com/live-hindi-radio-station.aspx">			</treeRoot>
+	<treeRoot name="KannadaRadios" label="Kannada Radios" url="http://www.livedesitube.com/live-kannada-radio-station.aspx">			</treeRoot>
+	<treeRoot name="TamilRadios" label="Tamil Radios" url="http://www.livedesitube.com/live-tamil-radio-station.aspx">			</treeRoot>
+			
+</treeRoots>
